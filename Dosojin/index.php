@@ -1,7 +1,7 @@
 <?php
 
-require_once 'Config/autoload.inc.php';
-require_once 'Config/config.inc.php';
+require_once 'Config/autoload.inc.php';                 //autoloader
+require_once 'Config/config.inc.php';                   //assegnazione variabile globale di configurazione
 
-$CHome=USingleton::getInstance('CHome');
-$CHome->smista();
+$FC = USingleton::getInstance('CFrontController'); //invocazione del frontcontroller
+$FC->smista();                                          //smistamento delle richieste

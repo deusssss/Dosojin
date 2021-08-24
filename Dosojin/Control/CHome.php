@@ -1,54 +1,34 @@
 <?php
 
-/**
+/** la classe CHome rappresenta il controllore delle operazioni relative alla visualizzazione della home page
+ *
  * @access public
  * @package Control
  */
 class CHome
 {
     /**
-     * Imposta la pagina, controlla l'autenticazione
+     * 1 - controlla se l'utente è loggato (sessione attiva)
+     * 2 - chiama il metodo di VHome per inviare una pagina in risposta, passa come parametro il tipo di pagina home richiesta (utente semplice/azienda, utente non registrato, moderatore/admin)
      */
-    public function impostaPagina()
+    public function impostaPaginaHome()
     {
-    }
+        $assign = array('logged'=>false, 'userType'=>'none','active'=>false, 'username'=>'', 'id'=>0, 'picture'=>'');
+        $sessionID = USingleton::getInstance('USession')->leggi_valore('idUtente');
+        if ($sessionID != false) {
+            $user = USingleton::getInstance('FPersistentManager')->getUtente($sessionID);
+            $assign['logged']=true;
+            $assign['username']=$user->username;
+            $assign['id']=$sessionID;
+            $assign['picture']='Smarty/immagini/profile/'.$user->profile_picture;
+            if (get_class($user) == 'EUtenteInterno') $assign['userType'] = 'interno';
+            else
+                if ($user->tipo == 'azienda') $assign['userType'] = 'azienda';
+                else $assign['userType'] = 'esterno';
+            if ($user->account_attivo == 1) $assign['active'] = true;
 
-
-    /**
-     * Smista le richieste ai vari controller
-     *
-     * @return void
-     */
-    public function smista()
-    {
-        $view = USingleton::getInstance('VHome');
-        switch ($view->getController()) {
-            case 'registrazione':
-                $azione = USingleton::getInstance('CRegistrazione');
-                break;
-            case 'logIn':
-                $azione = USingleton::getInstance('CLogIn');
-                break;
-            case 'userPage':
-                $azione = USingleton::getInstance('CPaginaUtente');
-                break;
-            case 'visualizzaPercorsi':
-                $azione = USingleton::getInstance('CSfogliaPercorsi');
-                break;
-            case 'creaPercorso':
-                $azione = USingleton::getInstance('CCreaPercorso');
-                break;
-            case 'percorsoSeguito':
-                $azione = USingleton::getInstance('CPercorsoSeguito');
-                break;
-            case 'inBox':
-                $azione = USingleton::getInstance('CInBox');
-                break;
-            default:
-                $this->impostaPagina();
-                return;
         }
+        USingleton::getInstance('VHome')->mostraPaginaHome($assign);
 
-        $azione->smista();
     }
 }

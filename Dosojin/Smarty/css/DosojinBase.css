@@ -1,0 +1,378 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #f7f7f7;
+}
+
+.navbar {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+/*
+headeer top
+*/
+.topbar {
+    background-color: #212529;
+    padding: 0;
+}
+
+.topbar .container .row {
+    margin: -7px;
+    padding: 0;
+}
+
+.topbar .container .row .col-md-12 {
+    padding: 0;
+}
+
+.topbar p {
+    margin: 0;
+    display: inline-block;
+    font-size: 13px;
+    color: #f1f6ff;
+}
+
+.topbar p > i {
+    margin-right: 5px;
+}
+
+.topbar p:last-child {
+    text-align: right;
+}
+
+header .navbar {
+    margin-bottom: 0;
+}
+
+.topbar li.topbar {
+    display: inline;
+    padding-right: 18px;
+    line-height: 52px;
+    transition: all .3s linear;
+}
+
+.topbar li.topbar:hover {
+    color: #1bbde8;
+}
+
+.topbar ul.info i {
+    color: #131313;
+    font-style: normal;
+    margin-right: 8px;
+    display: inline-block;
+    position: relative;
+    top: 4px;
+}
+
+.topbar ul.info li {
+    float: right;
+    padding-left: 30px;
+    color: #ffffff;
+    font-size: 13px;
+    line-height: 44px;
+}
+
+.topbar ul.info i span {
+    color: #aaa;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 50px;
+    padding-left: 18px;
+}
+
+ul.social-network {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.social-network li {
+    border: none;
+    margin: 0;
+}
+
+ul.social-network li i {
+    margin: 0;
+}
+
+ul.social-network li {
+    display: inline;
+    margin: 0 5px;
+    border: 0px solid #2D2D2D;
+    padding: 5px 0 0;
+    width: 32px;
+    display: inline-block;
+    text-align: center;
+    height: 32px;
+    vertical-align: baseline;
+    color: #000;
+}
+
+ul.social-network {
+    list-style: none;
+    margin: 5px 0 10px -25px;
+    float: right;
+}
+
+.waves-effect {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+    z-index: 1;
+    will-change: opacity, transform;
+    transition: .3s ease-out;
+    color: #fff;
+}
+
+a {
+    color: #0a0a0a;
+    text-decoration: none;
+}
+
+li {
+    list-style-type: none;
+}
+
+.bg-image-full {
+    background-position: center center;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.bg-dark {
+    background-color: #222 !important;
+}
+
+.mx-background-top-linear {
+    background: -webkit-linear-gradient(45deg, #3497da 48%, #1b1e21 48%);
+    background: -webkit-linear-gradient(left, #3497da 48%, #1b1e21 48%);
+    background: linear-gradient(45deg, #3497da 48%, #1b1e21 48%);
+}
+
+.centerLogo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    margin: auto;
+    padding: 19px 22px;
+    transition: all 0.2s ease;
+}
+
+.cta:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 28px;
+    background: rgba(251, 188, 4, 1.00);
+    width: 56px;
+    height: 56px;
+    transition: all 0.3s ease;
+}
+
+.cta span {
+    position: relative;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.cta svg {
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #111;
+    stroke-width: 2;
+    transform: translateX(-5px);
+    transition: all 0.3s ease;
+}
+
+.cta:hover:before {
+    width: 100%;
+    background: #FBBC04;
+}
+
+.cta:hover sv
+g {
+    transform: translateX(0);
+}
+
+.cta:active {
+    transform: scale(0.96);
+}
+
+
+.contentdiv {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+
+
+}
+.card {
+    margin-bottom: 20px;
+    border: none
+}
+
+.box {
+    width: 500px;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #191919;
+;
+    text-align: center;
+    transition: 0.25s;
+    margin-top: 100px
+}
+
+.box input[type="text"],
+.box input[type="password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 10px 10px;
+    width: 250px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}
+
+.box h1 {
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500
+}
+
+.box input[type="text"]:focus,
+.box input[type="password"]:focus {
+    width: 300px;
+    border-color: #f9bb05
+}
+
+.box input[type="submit"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #f9bb05;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer
+}
+
+.box input[type="submit"]:hover {
+    background: #f9bb05
+}
+
+.forgot {
+    text-decoration: underline
+}
+
+ul.social-network {
+    list-style: none;
+    display: inline;
+    margin-left: 0 !important;
+    padding: 0
+}
+
+ul.social-network li {
+    display: inline;
+    margin: 0 5px
+}
+
+.social-network a.icoFacebook:hover {
+    background-color: #3B5998
+}
+
+.social-network a.icoTwitter:hover {
+    background-color: #33ccff
+}
+
+.social-network a.icoGoogle:hover {
+    background-color: #BD3518
+}
+
+.social-network a.icoFacebook:hover i,
+.social-network a.icoTwitter:hover i,
+.social-network a.icoGoogle:hover i {
+    color: #fff
+}
+
+a.socialIcon:hover,
+.socialHoverClass {
+    color: #44BCDD
+}
+
+.social-circle li a {
+    display: inline-block;
+    position: relative;
+    margin: 0 auto 0 auto;
+    border-radius: 50%;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    font-size: 20px
+}
+
+.social-circle li i {
+    margin: 0;
+    line-height: 50px;
+    text-align: center
+}
+
+.social-circle li a:hover i,
+.triggeredHover {
+    transform: rotate(360deg);
+    transition: all 0.2s
+}
+
+.social-circle i {
+    color: #fff;
+    transition: all 0.8s;
+    transition: all 0.8s
+}
