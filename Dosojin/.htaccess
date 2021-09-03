@@ -1,0 +1,4 @@
+RewriteEngine on
+
+RewriteRule ^(.*)Smarty(.*)$ $1Smarty$2 [L]
+RewriteRule ^(.*)$ index.php

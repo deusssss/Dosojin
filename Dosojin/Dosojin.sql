@@ -9,7 +9,8 @@ CREATE TABLE percorso
     visibile           BOOLEAN NOT NULL DEFAULT false,
     luogo              TEXT    NOT NULL,
     descrizione        TEXT    NOT NULL,
-    periodoConsigliato TEXT    NOT NULL
+    periodoConsigliato TEXT    NOT NULL,
+    UNIQUE (nome, creatore)
 );
 CREATE TABLE tappa
 (
@@ -40,10 +41,10 @@ CREATE TABLE commento
 (
     id       INTEGER PRIMARY KEY AUTO_INCREMENT,
     utente   INTEGER REFERENCES utenteEsterno (id),
-    rating   INTEGER  NOT NULL DEFAULT 0,
-    testo    TEXT     NOT NULL,
+    rating   INTEGER NOT NULL DEFAULT 0,
+    testo    TEXT    NOT NULL,
     percorso INTEGER REFERENCES percorso (id),
-    data     DATETIME NOT NULL
+    data     TEXT    NOT NULL
 );
 
 CREATE TABLE utenteEsterno
@@ -58,8 +59,9 @@ CREATE TABLE utenteEsterno
     cognome         TEXT,
     informazioni    TEXT,
     tipo            TEXT    NOT NULL,
-    profile_picture TEXT    NOT NULL
+    profile_picture TEXT    NOT NULL DEFAULT 'ProPic_default.png'
 );
+
 
 CREATE TABLE utenteInterno
 (
@@ -69,7 +71,7 @@ CREATE TABLE utenteInterno
     email           TEXT    NOT NULL UNIQUE,
     account_attivo  BOOLEAN NOT NULL DEFAULT false,
     ruolo           TEXT    NOT NULL,
-    profile_picture TEXT    NOT NULL
+    profile_picture TEXT    NOT NULL DEFAULT 'ProPic_admin.png'
 );
 
 
@@ -86,3 +88,7 @@ CREATE TABLE percorsiSeguiti
     ID_tappa_corrente INTEGER REFERENCES tappa (ID_tappa, ID_percorso),
     PRIMARY KEY (ID_utente, ID_percorso)
 );
+
+INSERT INTO utenteInterno(username, password, email, account_attivo, ruolo, profile_picture)
+VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3', 'deuebiolorenzo@gmail.com', 1, 'amministratore',
+        'ProPic_admin.png')

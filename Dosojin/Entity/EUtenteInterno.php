@@ -5,7 +5,7 @@ class EUtenteInterno
     /**
      * @var int $id l'identificativo univoco dell'utente
      */
-public $id;
+    public $id;
     /**
      * @var string $username l'username associato al profilo
      */
@@ -21,11 +21,11 @@ public $id;
     /**
      * @var int $account_attivo se l'account è stato attivato o meno
      */
-public $account_attivo;
+    public $account_attivo;
     /**
      * @var string $ruolo il ruolo dell'utente interno, quindi amministratore o moderatore
      */
-public $ruolo;
+    public $ruolo;
     /**
      * @var string $profile_picture identificativo per la profile picture dell'utente
      */

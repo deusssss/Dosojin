@@ -9,18 +9,23 @@ class USession
     {
         session_start();
     }
-
-    function imposta_valore($chiave, $valore)
+    public function destroy()
+    {
+        session_unset();
+        session_destroy();
+        setcookie('PHPSESSID', '',-3600);
+    }
+    public function imposta_valore($chiave, $valore)
     {
         $_SESSION[$chiave] = $valore;
     }
 
-    function cancella_valore($chiave)
+    public function cancella_valore($chiave)
     {
         unset($_SESSION[$chiave]);
     }
 
-    function leggi_valore($chiave)
+    public function leggi_valore($chiave)
     {
         if (isset($_SESSION[$chiave]))
             return $_SESSION[$chiave];

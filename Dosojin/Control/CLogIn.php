@@ -6,12 +6,22 @@
  */
 class CLogin
 {
+
+    public function attiva($id)
+    {
+        if (USingleton::getInstance('FPersistentManager')->approvaUtente($id))
+            $this->getLoginForm();
+        else
+            $this->getLoginForm('Utente non trovato');
+    }
+
+
     /**
      * chiama la view che restituisce il form di login all'utente
      */
-    public function getLoginForm()
+    public function getLoginForm($text='')
     {
-        USingleton::getInstance('VLogin')->mostraFormLogin();
+        USingleton::getInstance('VLogin')->mostraFormLogin($text);
     }
 
     /**
@@ -21,47 +31,21 @@ class CLogin
      */
     public function autentica()
     {
-        $user=USingleton::getInstance('FPersistentManager')->logUtente($_REQUEST['username'], hash('md5', $_REQUEST['password']));
-        if ($user!=false) {
-            USingleton::getInstance('USession')->imposta_valore('id', $user->id);
-            USingleton::getInstance('CHome')->impostaPaginaHome();
-        }
-         else {
-            USingleton::getInstance('VLogin')->mostraFormLogin('utente non trovato');
-        }
-    }
-
-
-    /**
-     * Smista le richieste al metodo richiesto della classe
-     * rimanda alla home se è stato richiesto un metodo inesistente o se c'è una sessione attiva
-     *
-     * @return void
-     */
-    public function smista()
-    {
-        if (!USingleton::getInstance('USession')->leggi_valore('idUtente'))
-            try {
-                $task = $this->getTask();
-                $this->$task();
-            } catch (Error) {
+        $user = USingleton::getInstance('FPersistentManager')->logUtente($_POST['username'], hash('md5', $_POST['password']));
+        if ($user != false) {
+            if ($user->account_attivo == 0) {
+                $this->getLoginForm('Attiva il tuo account per effettuare il login');
+                return;
+            } else {
+                USingleton::getInstance('USession')->imposta_valore('idUtente', $user->id);
+                USingleton::getInstance('USession')->imposta_valore('tipoUtente', ltrim(get_class($user),'E'));
                 USingleton::getInstance('CHome')->impostaPaginaHome();
             }
-        else
-            USingleton::getInstance('CHome')->impostaPaginaHome();
+        } else {
+            $this->getLoginForm('utente non trovato');
+        }
     }
 
-    /**
-     * restituisce il task passato tramite la richiesta GET o POST
-     * restituisce false nel caso nessun task sia stato richiesto
-     *
-     * @return false|string
-     */
-    public function getTask(): bool|string
-    {
-        if (isset($_REQUEST['task']))
-            return $_REQUEST['task'];
-        else
-            return false;
-    }
+
+
 }

@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>D&#333sojin</title>
     <base href="https://localhost/Dosojin/">
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link href="Smarty/css/DosojinBase.css" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
@@ -31,35 +33,52 @@
 
                     {if $logged==false}
                         <li class="nav-item">
-                            <a class="nav-link" href="?controller=Login&task=getLoginForm">Login</a>
+                            <a class="nav-link" href="Login/getLoginForm">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="?controller=Registrazione&task=getSignUpForm">Registrati</a>
+                            <a class="nav-link" href="Registrazione/getSignUpForm">Registrati</a>
                         </li>
                     {/if}
                     {if $logged==true}
                         {if $userType!='interno'}
-                            {if $userType=='esterno'}
+                            {if $userType=='utente'}
                                 <li class="nav-item">
                                     <a class="nav-link"
-                                       href="?controller=SfogliaPercorsi&task=getPercorsiSalvati&id={$id}">Salvati</a>
+                                       href="SfogliaPercorsi/getPercorsiSalvati/{$idUtente}">Salvati</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link"
-                                       href="?controller=PercorsoSeguito&task=getPercorsoSeguito&id={$id}">Seguito</a>
+                                       href="PercorsoSeguito/getPercorsoSeguito">Seguito</a>
                                 </li>
                             {/if}
                             <li class="nav-item">
-                                <a class="nav-link" href="?controller=CreaPercorso&task=getFormCreaPercorso">Crea</a>
+                                <a class="nav-link" href="CreaPercorso/getFormCreaPercorso">Crea</a>
+                            </li>
+                        {/if}
+                        {if $userType=='interno'}
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="Inbox/getMyInbox">Inbox</a>
                             </li>
                         {/if}
                         <li class="nav-item">
-                            <a class="nav-link" href="?controller=Utente&task=getPaginaUtente&id={$id}">{$username}</a>
+                            {if $userType=='interno'}
+                                <a class="nav-link"
+                                   href="Utente/getPaginaUtente/{$idUtente}/true">{$username}</a>
+                            {/if}
+                            {if $userType!='interno'}
+                                <a class="nav-link"
+                                   href="Utente/getPaginaUtente/{$idUtente}">{$username}</a>
+                            {/if}
                         </li>
                         <li class="nav-item">
-                            <img src="{$picture}">
+                            <a class="nav-link" href="Logout/logout">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <img src="{$picture}" alt="" width="50" height="50">
                         </li>
                     {/if}
+
 
                 </ul>
             </div>
@@ -70,7 +89,7 @@
 <div class="container">
     <img src="Smarty/immagini/site/logo.png" class="centerLogo"><br>
     {if $userType=='interno'}
-        <a href="?controller=Inbox&task=getInbox&id={$id}" class=cta>
+        <a href="Inbox/getMyInbox" class="cta">
             <span>La tua inbox!</span>
             <svg width="13px" height="10px" viewBox="0 0 13 10">
                 <path d="M1,5 L11,5"></path>
@@ -79,13 +98,17 @@
         </a>
     {/if}
     {if $userType!='interno'}
-        <a href="?controller=sfogliaPercorsi&task=sfoglia" class=cta>
+        <a href="sfogliaPercorsi/sfogliaPercorsi" class="cta">
             <span>Sfoglia i percorsi!</span>
             <svg width="13px" height="10px" viewBox="0 0 13 10">
                 <path d="M1,5 L11,5"></path>
                 <polyline points="8 1 12 5 8 9"></polyline>
             </svg>
         </a>
+    {/if}
+    {if $logged==false}
+        <br>
+        <a href="Registrazione/getSignUpFormMod" class=nav-link>Lavora con noi</a>
     {/if}
 </div>
 </body>

@@ -12,11 +12,9 @@ class VHome extends View
      * @param EUtenteInterno|EUtenteEsterno $user oggetto utente da cui recuperare i dati utente da visualizzare
      * @throws SmartyException
      */
-    public function mostraPaginaHome($assign){
+    public function mostraPaginaHome(){
 
-        foreach($assign as $key=>$value){
-            $this->assign($key, $value);
-        }
+        $this->impostaLayout();
         $this->display('homepage.tpl');
     }
 }

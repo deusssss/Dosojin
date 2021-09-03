@@ -57,11 +57,15 @@ class EPercorso
      */
     public function calcolaRating()
     {
-        $tot = 0;
-        foreach ($this->commenti as $c) {
-            $tot += $c->rating;
-        }
-        return $tot / count($this->commenti);
+
+        if (count($this->commenti) > 0) {
+            $tot = 0;
+            foreach ($this->commenti as $c) {
+                $tot += $c->rating;
+            }
+            return $tot / count($this->commenti);
+        } else
+            return 0;
     }
 
     /**
@@ -71,11 +75,14 @@ class EPercorso
      */
     public function calcolaLunghezza()
     {
-        $tot = 0;
-        foreach ($this->trasporti as $t) {
-            $tot += $t->lunghezza_tragitto;
-        }
-        return $tot;
+        if (count($this->trasporti) > 0) {
+            $tot = 0;
+            foreach ($this->trasporti as $t) {
+                $tot += $t->lunghezza_tragitto;
+            }
+            return $tot;
+        } else
+            return 0;
     }
 
     /**
@@ -85,14 +92,13 @@ class EPercorso
      */
     public function calcolaDurata()
     {
-        $tot = 0;
-        foreach ($this->trasporti as $t) {
-            $tot += $t->durataViaggio();
-        }
-        foreach ($this->tappe as $t) {
-            $tot += $t->permanenza_consigliata;
-        }
-
-        return $tot;
+        if (count($this->trasporti) > 0) {
+            $tot = (new DateTime('0:0:0'));
+            foreach ($this->trasporti as $t) {
+                $tot=$tot->add( (new DateTime($t->durataViaggio()))->diff(new DateTime('0:0:0')));
+            }
+            return $tot->format('h:i:s');
+        } else
+            return 0;
     }
 }

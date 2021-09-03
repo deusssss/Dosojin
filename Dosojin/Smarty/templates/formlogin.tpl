@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>D&#333sojin</title>
     <base href="https://localhost/Dosojin/">
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link href="Smarty/css/DosojinBase.css" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
@@ -28,12 +30,12 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="?controller=Login&task=getLoginForm">Login
+                        <a class="nav-link" href="Login/getLoginForm">Login
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="?controller=Registrazione&task=getSignUpForm">Registrati</a>
+                        <a class="nav-link" href="Registrazione/getSignUpForm">Registrati</a>
                     </li>
 
 
@@ -44,26 +46,18 @@
 </div>
 <br><br><br><br>
 <div class="container">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <form action="" method="POST" class="box">
-                        <p class="text-muted">
-                            {$errmex}
-                        </p>
-                        <h1>Login</h1>
-                        <p class="text-muted"> Inserisci le tue credenziali per accedere!</p>
-                        <input type="text" name="username" placeholder="Username">
-                        <input type="password" name="password" placeholder="Password">
-                        <input type="hidden" name="controller" value="Login">
-                        <input type="hidden" name="task" value="autentica">
-                        <input type="submit" name="" value="Login" >
+    <div class="col-md-6">
+        <form action="Login/autentica" method="POST" class="box">
+            <p class="text-muted">
+                {$errmex}
+            </p>
+            <h1>Login</h1>
+            <p class="text-muted"> Inserisci le tue credenziali per accedere!</p>
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit">
 
-                    </form>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 
 

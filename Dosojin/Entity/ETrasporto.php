@@ -15,11 +15,11 @@ class ETrasporto
      */
     public $mezzo;
     /**
-     * @var ETappa $partenza la tappa di partenza
+     * @var int $partenza la tappa di partenza
      */
     public $partenza;
     /**
-     * @var ETappa $arrivo la tappa di arrivo
+     * @var int $arrivo la tappa di arrivo
      */
     public $arrivo;
     /**
@@ -45,6 +45,6 @@ class ETrasporto
 
     public function durataViaggio()
     {
-        return (new DateTime($this->ora_arrivo))->diff(new DateTime($this->ora_partenza))->format('%i');
+        return (new DateTime($this->ora_arrivo))->diff(new DateTime($this->ora_partenza))->format('%h:%i:%s');
     }
 }

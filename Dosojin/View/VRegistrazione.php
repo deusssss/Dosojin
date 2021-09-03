@@ -6,8 +6,10 @@
 class VRegistrazione extends View
 {
 
-    public function mostraFormRegistrazione()
+    public function mostraFormRegistrazione($errmex='',$mod=false)
     {
+        $this->assign('mod',$mod);
+        $this->assign('error', $errmex);
         $this->display('formregistrazione.tpl');
     }
 

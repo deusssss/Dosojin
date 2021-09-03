@@ -12,10 +12,11 @@ $config['mysql']['password'] = '';
 $config['mysql']['host'] = 'localhost';
 $config['mysql']['database'] = 'dosojin';
 //phpmailer
-/*$config['smtp']['host'] = 'smtp.cheapnet.it';
-$config['smtp']['port'] = '25';
-$config['smtp']['smtpauth'] = false;
-$config['smtp']['username'] = '';
-$config['smtp']['password'] = '';
-*/
-//$config['url']='http://localhost/Dosojin/';
+$config['smtp']['host'] = 'smtp.mailtrap.io';
+$config['smtp']['sender'] = 'de7f00c8d0-ccb0a7@inbox.mailtrap.io';
+$config['smtp']['port'] = '2525';
+$config['smtp']['smtpauth'] = true;
+$config['smtp']['username'] = '449c17f586ce51';
+$config['smtp']['password'] = '8dad622de4306f';
+
+$config['url']='http://localhost/Dosojin/';

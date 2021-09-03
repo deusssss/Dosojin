@@ -41,7 +41,7 @@ class FDB
      * @param object $obj oggetto da cui estrarre i parametri
      * @return array
      */
-    private function extractParams($obj)
+    public function extractParams($obj)
     {
         $parameters = array();
         foreach ($this->paramNames as $param) {
@@ -116,7 +116,6 @@ class FDB
     public function update($obj, $keys)
     {
         $params = $this->extractParams($obj);
-        $keysType = '';
         $query = 'UPDATE ' . $this->tableName . ' SET ';
         foreach ($params as $key => $value) {
             $query = $query . $key . "=?,";
@@ -124,7 +123,6 @@ class FDB
         $query = rtrim($query, ',') . ' WHERE ';
         foreach ($keys as $key => $value) {
             $query = $query . $key . "=?" . ' AND ';
-            $keysType = $keysType . 'i';
         }
         $query = rtrim($query, ' AND ');
         $this->query($query, array_merge(array_values($params), array_values($keys)), false);
@@ -159,7 +157,7 @@ class FDB
      * @param array $order lista dei valori in base al quale ordinare
      * @return array
      */
-    public function search($where, $order = array())
+    public function search($where, $order = array(), $obj = true)
     {
         $query = 'SELECT * FROM ' . $this->tableName . ' WHERE ';
         foreach ($where as $key => $value) {
@@ -173,8 +171,10 @@ class FDB
             }
             $query = rtrim($query, ', ');
         }
-
-        return $this->Arr2Obj($this->query($query, array_values($where), true));
+        if ($obj)
+            return $this->Arr2Obj($this->query($query, array_values($where), true));
+        else
+            return $this->query($query, array_values($where), true);
 
     }
 
