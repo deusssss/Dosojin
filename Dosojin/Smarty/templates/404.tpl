@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="it">
 <head>
     <meta charset="utf-8">
     <title>D&#333sojin</title>
@@ -90,7 +90,7 @@
 
     <div id="notfound">
         <div class="notfound">
-            <img src="Smarty/immagini/site/monkey.jpg" class="centerLogo"><br>
+            <img src="Smarty/immagini/site/monkey.jpg" class="centerLogo" alt=""><br>
             <div class="notfound-404">
                 <h3>Oops! pagina non trovata</h3>
                 <h1><span>4</span><span>0</span><span>4</span></h1>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="it">
 <head>
     <meta charset="utf-8">
     <title>D&#333sojin</title>
@@ -87,7 +87,7 @@
 </div>
 <br><br><br><br>
 <div class="container">
-    <img src="Smarty/immagini/site/logo.png" class="centerLogo"><br>
+    <img src="Smarty/immagini/site/logo.png" class="centerLogo" alt=""><br>
     {if $userType=='interno'}
         <a href="Inbox/getMyInbox" class="cta">
             <span>La tua inbox!</span>
