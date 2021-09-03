@@ -3,9 +3,20 @@
 /**
  * @access public
  * @package Control
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
+ * Controllore responsabile della gestione della pagina utente
  */
 class CUtente
 {
+    /**
+     * visualizza la pagina dell'utente richiesto tramita la view
+     *
+     * @param int $id l'id dell'utente
+     * @param false $int se si tratta di un utente interno
+     */
     public function getPaginaUtente($id, $int = false)
     {
         if ($int)
@@ -16,6 +27,9 @@ class CUtente
         USingleton::getInstance('VUtente')->mostraPaginaUtente($user, $percorsiCreati);
     }
 
+    /**
+     * visualizza la pagina dell'utente loggato tramite la view
+     */
     public function getPaginathisUtente()
     {
         if (USingleton::getInstance('USession') != false) {
@@ -26,6 +40,10 @@ class CUtente
             USingleton::getInstance('CHome')->impostaPaginaHome();
     }
 
+    /**
+     * 1 - aggiorna l'immagine del profilo dell'utente
+     * 2 - salva la nuova immagine del profilo
+     */
     public function aggiornaImmagineProfilo()
     {
         $user = USingleton::getInstance('FPersistentManager')->getUtente(USingleton::getInstance('USession')->leggi_valore('idUtente'), USingleton::getInstance('USession')->leggi_valore('tipoUtente'));
@@ -35,6 +53,9 @@ class CUtente
         $this->getPaginathisUtente();
     }
 
+    /**
+     * aggiorna la informazioni del profilo dell'utente
+     */
     public function aggiornaInfoProfilo()
     {
         $user = USingleton::getInstance('FPersistentManager')->getUtente(USingleton::getInstance('USession')->leggi_valore('idUtente'), USingleton::getInstance('USession')->leggi_valore('tipoUtente'));

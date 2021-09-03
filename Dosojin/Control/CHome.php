@@ -1,9 +1,13 @@
 <?php
 
-/** la classe CHome rappresenta il controllore delle operazioni relative alla visualizzazione della home page
- *
+/**
  * @access public
  * @package Control
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
+ * la classe CHome rappresenta il controllore delle operazioni relative alla visualizzazione della home page
  */
 class CHome
 {

@@ -3,9 +3,20 @@
 /**
  * @access public
  * @package View
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
  */
 class VUtente extends View
 {
+    /**
+     * visualizza una pagina utente
+     *
+     * @param EUtenteInterno|EUtenteEsterno $user
+     * @param array $percorsiCreati lista dei percorsi creati dall'utente
+     * @throws SmartyException
+     */
     public function mostraPaginaUtente($user, $percorsiCreati){
 
         if (get_class($user) == 'EUtenteEsterno') {

@@ -1,6 +1,12 @@
 <?php
 
 /**
+ * @access public
+ * @package Foundation
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
  * Il *_leggere con tono fighissimo di cicerone quando lo ha detto_ "MANAGER DELLA PERSISTENZA", si occupa di smistare le varie richieste ai metodi del package foundation, fungendo effettivamente come porta di accesso ad esso.
  *
  */

@@ -3,9 +3,19 @@
 /**
  * @access public
  * @package View
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
  */
 class VCreaPercorso extends View
 {
+    /**
+     * imposta la pagina per la creazione del percorso
+     *
+     * @param $errmex
+     * @throws SmartyException
+     */
     public function impostaFormCrea($errmex)
     {
         $this->impostaLayout();
@@ -13,6 +23,13 @@ class VCreaPercorso extends View
         $this->display('formcreazionepercorso.tpl');
     }
 
+    /**
+     * imposta la pagina per l'aggiunta di tappe e trasporti
+     *
+     * @param EPercorso $percorso il percorso creato finora
+     * @param string $errmex eventuali errori
+     * @throws SmartyException
+     */
     public function impostaFormEditNewPercorso($percorso, $errmex)
     {
         $arrayTappe = array();
@@ -52,6 +69,11 @@ class VCreaPercorso extends View
 
     }
 
+    /**
+     * mostra la scheda di conferma del percorso creato
+     * @param int $id id del percorso
+     * @throws SmartyException
+     */
     public function mostraSchedaConferma($id)
     {
         $this->impostaLayout();

@@ -3,9 +3,20 @@
 /**
  * @access public
  * @package Control
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
+ * Controllore per la pubblicazione dei commenti
  */
 class CCommento
 {
+    /**
+     * 1 - crea un nuovo oggetto della classe commento
+     * 2 - associa i parametri inviati al commento creato
+     * 3 - inserisci il commento nel database tramite il FM
+     * 4 - visualizza la pagina di visualizzazione del percorso con il nuovo commento tramite la vIew
+     */
     public function pubblicaCommento()
     {
         $commento = new Ecommento();
@@ -16,7 +27,7 @@ class CCommento
         date_default_timezone_set('Europe/Rome');
         $commento->data = "Il " . date("Y/m/d") . ' alle ' . date('h:i');
         USingleton::getInstance('FPersistentManager')->pubblicaCommento($commento);
-        USingleton::getInstance('CVisualizzaPercorso')->impostaPaginaVisualizzazione($commento->percorso,  $_POST['tappa'],  $_POST['seguito']);
+        USingleton::getInstance('CVisualizzaPercorso')->impostaPaginaVisualizzazione($commento->percorso, $_POST['tappa'], $_POST['seguito']);
     }
 
 }

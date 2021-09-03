@@ -3,10 +3,21 @@
 /**
  * @access public
  * @package View
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
  */
 class VVisualizzaPercorso extends View
 {
-    public function mostraSchedaPercorso($percorso, $tappa, $seguito=false)
+    /**
+     * mostra la scheda di un percorso
+     * @param EPercorso $percorso
+     * @param ETappa $tappa la tappa da mostrare
+     * @param boolean $seguito se si tratta della tappa del percorso seguito
+     * @throws SmartyException
+     */
+    public function mostraSchedaPercorso($percorso, $tappa, $seguito = false)
     {
 
         $arrayPercorso = array(
@@ -58,11 +69,11 @@ class VVisualizzaPercorso extends View
             $arrayPercorso['commenti'][] = array(
                 'id' => $t->id,
                 'idUtente' => $t->utente,
-                'nomeUtente'=>USingleton::getInstance('FPersistentManager')->getUtente($t->utente , 'UtenteEsterno')->username,
+                'nomeUtente' => USingleton::getInstance('FPersistentManager')->getUtente($t->utente, 'UtenteEsterno')->username,
                 'rating' => $t->rating,
                 'testo' => $t->testo,
                 'data' => $t->data,
-                'propic'=>'Smarty/immagini/profile/'.USingleton::getInstance('FPersistentManager')->getUtente($t->utente,  'UtenteEsterno')->profile_picture);
+                'propic' => 'Smarty/immagini/profile/' . USingleton::getInstance('FPersistentManager')->getUtente($t->utente, 'UtenteEsterno')->profile_picture);
         }
 
 

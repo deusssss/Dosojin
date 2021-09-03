@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * @access public
+ * @package Foundation
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
+ * Class FTappa
+ *
+ */
 class FTappa extends FDB
 {
     /**

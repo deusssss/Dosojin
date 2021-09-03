@@ -1,10 +1,13 @@
 <?php
 
 /**
- * classe di partenza per i medodi del package foundation, i quali la estendono per avere a disposizione la connettività al database
- *
  * @access public
  * @package Foundation
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
+ * classe di partenza per i medodi del package foundation, i quali la estendono per avere a disposizione la connettività al database
  */
 class FDB
 {

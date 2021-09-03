@@ -6,23 +6,37 @@ require('PHPMailer/src/Exception.php');
 require('PHPMailer/src/PHPMailer.php');
 require('PHPMailer/src/SMTP.php');
 
+
 /**
  * @access public
  * @package Control
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
+ * Controllore responsabile della registrazione dell'utente
  */
 class CRegistrazione
 {
-
+    /**
+     * visualizza la form di registrazione tramite la view
+     */
     public function getSignUpForm()
     {
         USingleton::getInstance('VRegistrazione')->mostraFormRegistrazione();
     }
 
+    /**
+     * visualizza la form di registrazione per moderatori tramite la view
+     */
     public function getSignUpFormMod()
     {
         USingleton::getInstance('VRegistrazione')->mostraFormRegistrazione('', true);
     }
 
+    /**
+     * in base al tipo di utente valuta diversamente la richiesta di iscrizione
+     */
     public function valutaRichiesta()
     {
         if (isset($_POST['azienda'])) $this->valutaRichiestaAzienda();
@@ -30,6 +44,9 @@ class CRegistrazione
         else  $this->valutaRichiestaUser();
     }
 
+    /**
+     * nel caso di un moderatore crea l'account non approvato e reindirizza alla home
+     */
     public function valutaRichiestaMod()
     {
         if ($_POST['password'] != $_POST['confirm_password']) {
@@ -52,6 +69,9 @@ class CRegistrazione
         }
     }
 
+    /**
+     * nel caso di un azienda crea l'account non approvato e reindirizza alla home
+     */
     public function valutaRichiestaAzienda()
     {
         if ($_POST['password'] != $_POST['confirm_password']) {
@@ -76,6 +96,9 @@ class CRegistrazione
         }
     }
 
+    /**
+     * nel caso di un utente crea l'account non approvatoe  reindirizza alla home, quindi invia una email di conferma
+     */
     public function valutaRichiestaUser()
     {
         if ($_POST['password'] != $_POST['confirm_password']) {

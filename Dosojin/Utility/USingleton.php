@@ -3,6 +3,9 @@
 /**
  * @access public
  * @package Utility
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
  */
 class USingleton
 {

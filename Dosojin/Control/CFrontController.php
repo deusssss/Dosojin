@@ -1,10 +1,14 @@
 <?php
 
+
 /**
- * La classe CFrontController rappresenta l'omonimo strumento, un pannello di interazione attrverso il quale main.php può efficacemente gestire le richieste smistandole per controller e task
- *
  * @access public
  * @package Control
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
+ * La classe CFrontController rappresenta l'omonimo strumento, un pannello di interazione attrverso il quale main.php può efficacemente gestire le richieste smistandole per controller e task
  */
 class CFrontController
 {
@@ -26,7 +30,12 @@ class CFrontController
                 if (method_exists($class, $request[1])) {
                     $method = $request[1];
                     $params = array_slice($request, 2);
-                    $class->$method(...$params);
+                    try {
+                        $class->$method(...$params);
+                    }
+                    catch (Error){
+                        USingleton::getInstance('CError')->impostaPaginaErrore('except');
+                    }
                 } else {
                     USingleton::getInstance('CError')->impostaPaginaErrore('metodo');
                 }

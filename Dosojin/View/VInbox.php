@@ -2,11 +2,19 @@
 
 /**
  * @access public
- * @package Control
+ * @package View
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
  */
 class VInbox extends View
 {
-
+    /**imposta la pagina di inbox dell'utente
+     * @param EUtenteInterno $user
+     * @param array $inbox percorsi o utenti da approvare
+     * @throws SmartyException
+     */
     public function mostraInbox($user, $inbox)
     {
         $this->impostaLayout();

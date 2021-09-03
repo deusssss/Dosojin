@@ -3,10 +3,19 @@
 /**
  * @access public
  * @package Control
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
+ * Controllore del login
  */
 class CLogin
 {
-
+    /**
+     * attiva l'account di un utente esterno
+     *
+     * @param $id id utente
+     */
     public function attiva($id)
     {
         if (USingleton::getInstance('FPersistentManager')->approvaUtente($id))
@@ -18,8 +27,10 @@ class CLogin
 
     /**
      * chiama la view che restituisce il form di login all'utente
+     *
+     * @param string $text informazioni su eventuali errori
      */
-    public function getLoginForm($text='')
+    public function getLoginForm($text = '')
     {
         USingleton::getInstance('VLogin')->mostraFormLogin($text);
     }
@@ -38,14 +49,13 @@ class CLogin
                 return;
             } else {
                 USingleton::getInstance('USession')->imposta_valore('idUtente', $user->id);
-                USingleton::getInstance('USession')->imposta_valore('tipoUtente', ltrim(get_class($user),'E'));
+                USingleton::getInstance('USession')->imposta_valore('tipoUtente', ltrim(get_class($user), 'E'));
                 USingleton::getInstance('CHome')->impostaPaginaHome();
             }
         } else {
             $this->getLoginForm('utente non trovato');
         }
     }
-
 
 
 }

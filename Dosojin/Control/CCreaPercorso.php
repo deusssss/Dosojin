@@ -3,9 +3,19 @@
 /**
  * @access public
  * @package Control
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
+ * Controllore per la gestione della creazione di nuovi percorsi
  */
 class CCreaPercorso
 {
+    /**
+     * visualizza la pagina per la creazione di un nuovo percorso tramite la view
+     *
+     * @param string $errmex messaggio di errore da stampare nel caso qualcos non sia andato a buoon fine
+     */
     public function getFormCreaPercorso($errmex = '')
     {
 
@@ -13,6 +23,13 @@ class CCreaPercorso
 
     }
 
+    /**
+     * 1 - crea un nuovo oggetto di tipo percorso
+     * 2 - associa al percorso gli attributi passati tramite la form di creazione del percorso
+     * 3 - salva i dettagli del percorso nel cookie di sessione
+     * 4 - mostra la scheda per il popolamento del percorso tramite la view
+     * 5 - se il nome dl percorso esiste già per questo utente rimandalo alla form per la creazione, informandolo
+     */
     public function getFormEditPercorso()
     {
 
@@ -35,6 +52,15 @@ class CCreaPercorso
             $this->getFormCreaPercorso('Un percorso con questo nome è già associato al tuo account, per favore scegline un altro');
     }
 
+    /**
+     * 1 - se l'utente ha richiesto di inserire una tappa o un trasporto crea l'oggetto associato
+     * 2 - associ all'oggetto creato i parametri passati
+     * 3 - controlla che la pagina non sia stata ricaricata o che l'utente non abbia inserito due volte la stessa tappa o trasporto
+     * 4 - salva il nuovo oggetto nel cookie di sessione
+     * 5 - imposta il form per l'aggiunta di nuovi elementi tramite la view
+     *
+     * @param string $errmex messaggio di errore da visualizzare all'utente
+     */
     public function editNewPercorso($errmex = '')
     {
 
@@ -69,7 +95,14 @@ class CCreaPercorso
 
     }
 
-    public function checkReloadTappa($tappa, $lastTappa)
+    /**
+     * controlla se la tappa aggiunta è la stessa dell'ultima aggiunta
+     *
+     * @param ETappa $tappa la tappa aggiunta
+     * @param ETappa $lastTappa l'ultima tappa aggiunta
+     * @return bool se le tappe sono uguali
+     */
+    private function checkReloadTappa($tappa, $lastTappa)
     {
         if ($tappa->nome != $lastTappa->nome)
             return true;
@@ -85,7 +118,14 @@ class CCreaPercorso
             return false;
     }
 
-    public function checkReloadTrasporto($trasporto, $lastTrasporto)
+    /**
+     * controlla se il trasporto aggiunto è uguale all'ultimo trasporto aggiunto
+     *
+     * @param ETrasporto trasporto trasporto aggiunto
+     * @param ETrasporto $lastTrasporto l'ultimo trasporto aggiunto
+     * @return bool se i trasporti sono uguali
+     */
+    private function checkReloadTrasporto($trasporto, $lastTrasporto)
     {
         if ($trasporto->mezzo != $lastTrasporto->mezzo)
             return true;
@@ -107,6 +147,12 @@ class CCreaPercorso
             return false;
     }
 
+    /**
+     * 1 - recupera il percorso crato dal cookie di sessione
+     * 2 - controlal che ci siano almeno due tappe, altrimenti lo segnala all'utente
+     * 3 - crea il nuovo percorso nel database
+     * 4 - mostra la scheda di conferma all'utente della avvenuta creazione del percorso tramite la view
+     */
     public function crea()
     {
         $percorso = USingleton::getInstance('USession')->leggi_valore('percorso creato');

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @access public
+ * @package Foundation
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
+ * Class FCommento
+ */
 class FCommento extends FDB
 {
     /**

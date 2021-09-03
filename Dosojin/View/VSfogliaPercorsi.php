@@ -3,9 +3,20 @@
 /**
  * @access public
  * @package View
+ *
+ * @author Lorenzo D'eusebio
+ * @author Beatrice Toscano
+ *
  */
 class VSfogliaPercorsi extends View
 {
+    /**
+     * imposta la pagina contente tutti i percorsi, o i percorsi salvati di un utente
+     *
+     * @param array $percorsi la lista di percorsi da mostrare
+     * @param boolean $salvati se si tratta di una lista di percorsi salvati
+     * @throws SmartyException
+     */
     public function impostaPaginaSfoglia($percorsi, $salvati = false)
     {
         $percorsiArray = array();
