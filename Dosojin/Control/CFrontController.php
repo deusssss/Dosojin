@@ -34,16 +34,16 @@ class CFrontController
                         $class->$method(...$params);
                     }
                     catch (Error|Exception){
-                        USingleton::getInstance('CError')->impostaPaginaErrore('except');
+                        USingleton::getInstance('CError')->impostaPaginaErrore('except', 404);
                     }
                 } else {
-                    USingleton::getInstance('CError')->impostaPaginaErrore('metodo');
+                    USingleton::getInstance('CError')->impostaPaginaErrore('metodo', 400);
                 }
             } else {
-                USingleton::getInstance('CError')->impostaPaginaErrore('classe');
+                USingleton::getInstance('CError')->impostaPaginaErrore('classe', 400);
             }
         } else {
-            USingleton::getInstance('CError')->impostaPaginaErrore('cookie');
+            USingleton::getInstance('CError')->impostaPaginaErrore('cookie', 0);
         }
     }
 

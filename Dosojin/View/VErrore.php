@@ -17,10 +17,11 @@ class VErrore extends View
      * @param string $errmex messaggio di errore
      * @throws SmartyException
      */
-    public function visualizzaPaginaErrore(string $errmex){
+    public function visualizzaPaginaErrore(string $errmex, $codice){
 
         $this->impostaLayout();
+        $this->assign('codice', $codice);
         $this->assign('errmex', $errmex);
-        $this->display('404.tpl');
+        $this->display('errore.tpl');
     }
 }

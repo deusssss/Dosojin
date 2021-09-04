@@ -16,14 +16,14 @@ class CError
      * 2 - visualizza la schermata di errore tramite la view
      * @param string $errore
      */
-    public function impostaPaginaErrore(string $errore)
+    public function impostaPaginaErrore(string $errore, $codice)
     {
         $errore = match ($errore) {
             'classe' => 'Non abbiamo nessuna scimmia che possa soddisfare la tua richiesta, se hai inserito un URL manualmente controlla di non aver commesso errori di digitazione',
             'metodo' => 'La scimmia che hai richiesto non è in grado di soddisfare la tua richiesta, se hai inserito un URL manualmente controlla di non aver commesso errori di digitazione',
-            'cookie' => 'Le nostre scimmie potrebbero eseguire i tuoi ordini, ma per farlo vogliono dei biscotti, per favore abilita i cookies nel tuo browser, fallo per quelle scimmiette carine',
+            'cookie' => 'Le nostre scimmie potrebbero eseguire i tuoi ordini, ma per farlo vogliono dei biscotti, per favore abilita i cookies nel tuo browser, fallo per quelle scimmiette carine! Se i cookie sono attivi ricarica la pagina per accedere al sito',
             'except' => 'Una delle nostre scimmie non è riuscita a gestire la tua richiesta, probabilmente è colpa sua, non tua, comunque controlla la URL che hai inserito, per sicurezza'
         };
-        USingleton::getInstance('VErrore')->visualizzaPaginaErrore($errore);
+        USingleton::getInstance('VErrore')->visualizzaPaginaErrore($errore, $codice);
     }
 }
