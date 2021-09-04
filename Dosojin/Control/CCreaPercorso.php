@@ -15,11 +15,14 @@ class CCreaPercorso
      * visualizza la pagina per la creazione di un nuovo percorso tramite la view
      *
      * @param string $errmex messaggio di errore da stampare nel caso qualcos non sia andato a buoon fine
+     * @throws Exception
      */
     public function getFormCreaPercorso(string $errmex = '')
     {
-
-        USingleton::getInstance('VCreaPercorso')->impostaFormCrea($errmex);
+        if (USingleton::getInstance('USession')->leggi_valore('idUtente') != false)
+            USingleton::getInstance('VCreaPercorso')->impostaFormCrea($errmex);
+        else
+            throw new Exception();
 
     }
 
@@ -29,27 +32,31 @@ class CCreaPercorso
      * 3 - salva i dettagli del percorso nel cookie di sessione
      * 4 - mostra la scheda per il popolamento del percorso tramite la view
      * 5 - se il nome dl percorso esiste già per questo utente rimandalo alla form per la creazione, informandolo
+     * @throws Exception
      */
     public function getFormEditPercorso()
     {
 
         $sessionID = USingleton::getInstance('USession')->leggi_valore('idUtente');
-        if (USingleton::getInstance('FPersistentManager')->EsisteNomePercorso($sessionID, $_POST['nome']) == false) {
-            $percorso = new EPercorso;
-            $percorso->nome = $_POST['nome'];
-            $percorso->creatore = USingleton::getInstance('USession')->leggi_valore('idUtente');
-            $percorso->luogo = $_POST['luogo'];
-            $percorso->descrizione = $_POST['descrizione'];
-            $percorso->periodoConsigliato = $_POST['periodoConsigliato'];
-            $percorso->approvato = 0;
-            $percorso->visibile = 0;
-            $percorso->tappe = array();
-            $percorso->trasporti = array();
-            $percorso->commenti = array();
-            USingleton::getInstance('USession')->imposta_valore("percorso creato", $percorso);
-            $this->editNewPercorso();
+        if ($sessionID != false && (USingleton::getInstance('FPersistentManager')->getUtente($sessionID, 'UtenteEsterno')->account_attivo == 1)) {
+            if (USingleton::getInstance('FPersistentManager')->EsisteNomePercorso($sessionID, $_POST['nome']) == false) {
+                $percorso = new EPercorso;
+                $percorso->nome = $_POST['nome'];
+                $percorso->creatore = USingleton::getInstance('USession')->leggi_valore('idUtente');
+                $percorso->luogo = $_POST['luogo'];
+                $percorso->descrizione = $_POST['descrizione'];
+                $percorso->periodoConsigliato = $_POST['periodoConsigliato'];
+                $percorso->approvato = 0;
+                $percorso->visibile = 0;
+                $percorso->tappe = array();
+                $percorso->trasporti = array();
+                $percorso->commenti = array();
+                USingleton::getInstance('USession')->imposta_valore("percorso creato", $percorso);
+                $this->editNewPercorso();
+            } else
+                $this->getFormCreaPercorso('Un percorso con questo nome è già associato al tuo account, per favore scegline un altro');
         } else
-            $this->getFormCreaPercorso('Un percorso con questo nome è già associato al tuo account, per favore scegline un altro');
+            throw new Exception();
     }
 
     /**
@@ -65,7 +72,7 @@ class CCreaPercorso
     {
 
         $percorso = USingleton::getInstance('USession')->leggi_valore('percorso creato');
-        if ($_POST['add'] == 'tappa') {
+        if (isset($_POST['add']) && $_POST['add'] == 'tappa') {
             $newTappa = new ETappa();
             $newTappa->ID_tappa = count($percorso->tappe);
             $newTappa->nome = $_POST['nome'];
@@ -73,9 +80,9 @@ class CCreaPercorso
             $newTappa->permanenza_consigliata = $_POST['permanenzaConsigliata'];
             $newTappa->informazioni = $_POST['informazioni'];
             $newTappa->risorse = $_POST['risorse'];
-            if ($this->checkReloadTappa($newTappa, end($percorso->tappe)))
+            if (count($percorso->tappe) < 2 || $this->checkReloadTappa($newTappa, end($percorso->tappe)))
                 $percorso->tappe[] = $newTappa;
-        } else if ($_POST['add'] == 'trasporto') {
+        } else if (isset($_POST['add']) && $_POST['add'] == 'trasporto') {
             $newTrasporto = new ETrasporto;
             $newTrasporto->mezzo = $_POST['mezzo'];
             $newTrasporto->ID_trasporto = count($percorso->trasporti);
@@ -87,7 +94,7 @@ class CCreaPercorso
             $newTrasporto->ora_arrivo = $_POST['ora_arrivo'];
             $newTrasporto->lunghezza_tragitto = floatval($_POST['lunghezza_tragitto']);
 
-            if ($this->checkReloadTrasporto($newTrasporto, end($percorso->trasporti)))
+            if (count($percorso->trasporti) < 2 || $this->checkReloadTrasporto($newTrasporto, end($percorso->trasporti)))
                 $percorso->trasporti[] = $newTrasporto;
         }
 

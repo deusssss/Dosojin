@@ -33,7 +33,7 @@ class CFrontController
                     try {
                         $class->$method(...$params);
                     }
-                    catch (Error){
+                    catch (Error|Exception){
                         USingleton::getInstance('CError')->impostaPaginaErrore('except');
                     }
                 } else {

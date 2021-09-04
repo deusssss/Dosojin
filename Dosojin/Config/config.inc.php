@@ -19,4 +19,4 @@ $config['smtp']['smtpauth'] = true;
 $config['smtp']['username'] = '449c17f586ce51';
 $config['smtp']['password'] = '8dad622de4306f';
 
-$config['url']='http://localhost/Dosojin/';
+$config['url']='https://localhost/Dosojin/';

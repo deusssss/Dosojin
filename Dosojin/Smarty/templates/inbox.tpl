@@ -30,8 +30,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link"
-                               href="Utente/getPaginaUtente/{$idUtente}/true">{$username}</a>
+                        <a class="nav-link"
+                           href="Utente/getPaginathisUtente">{$username}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="Logout/logout">Logout</a>

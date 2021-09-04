@@ -21,70 +21,92 @@ class CInbox
      * 1 - recupera l'utente dalla sessione
      * 2 - recupera l'inbox dell'utente dal FC
      * 3 - mostra la pagina di visualizzazione dell'inbox dalla view
+     * @throws Exception
      */
     public function getMyInbox()
     {
-        $user = (USingleton::getInstance('FPersistentManager')->getUtente(USingleton::getInstance('USession')->leggi_valore('idUtente'), 'UtenteInterno'));
-        $inbox = USingleton::getInstance('FPersistentManager')->getInbox($user->id);
-        USingleton::getInstance('VInbox')->mostraInbox($user, $inbox);
+        if (USingleton::getInstance('USession')->leggi_valore('tipoUtente') == 'UtenteInterno') {
+            $user = (USingleton::getInstance('FPersistentManager')->getUtente(USingleton::getInstance('USession')->leggi_valore('idUtente'), 'UtenteInterno'));
+            $inbox = USingleton::getInstance('FPersistentManager')->getInbox($user->id);
+            USingleton::getInstance('VInbox')->mostraInbox($user, $inbox);
+        } else
+            throw new Exception();
     }
 
     /**
      * attiva un percorso ed invia una mail di conferma al creatore
      * @param int $id id del percorso
+     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws Exception
      */
     public function attivaPercorso(int $id)
     {
-        USingleton::getInstance('FPersistentManager')->approvaPercorso($id);
-        $p = USingleton::getInstance('FPersistentManager')->getPercorso($id);
-        $u = USingleton::getInstance('FPersistentManager')->getUtente($p->creatore, 'UtenteEsterno');
-        $this->getMyInbox();
-        $this->inviaMail($u->username, 'percorso', 'approvato', $p->id, $u->email);
+        if (USingleton::getInstance('USession')->leggi_valore('tipoUtente') == 'UtenteInterno') {
+            USingleton::getInstance('FPersistentManager')->approvaPercorso($id);
+            $p = USingleton::getInstance('FPersistentManager')->getPercorso($id);
+            $u = USingleton::getInstance('FPersistentManager')->getUtente($p->creatore, 'UtenteEsterno');
+            $this->getMyInbox();
+            $this->inviaMail($u->username, 'percorso', 'approvato', $p->id, $u->email);
+        } else
+            throw new Exception();
     }
 
     /**
      * attiva un account ed invia una mail di conferma all'utente
      * @param int $id id dell'account
      * @param string $tipo
+     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws Exception
      */
     public function attivaUtente(int $id, string $tipo)
     {
-        if ($tipo == 'moderatore')
-            $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteInterno');
-        else
-            $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteEsterno');
-        USingleton::getInstance('FPersistentManager')->approvaUtente($id, $tipo);
-        $this->getMyInbox();
-        $this->inviaMail($u->username, 'account', 'approvato', $u->id, $u->email);
+        if (USingleton::getInstance('USession')->leggi_valore('tipoUtente') == 'UtenteInterno') {
+            if ($tipo == 'moderatore')
+                $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteInterno');
+            else
+                $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteEsterno');
+            USingleton::getInstance('FPersistentManager')->approvaUtente($id, $tipo);
+            $this->getMyInbox();
+            $this->inviaMail($u->username, 'account', 'approvato', $u->id, $u->email);
+        } else
+            throw new Exception();
     }
 
     /**
      * rifiuta un percorso ed invia una mail di conferma al creatore
      * @param int $id id del percorso
+     * @throws Exception
      */
     public function rifiutaPercorso(int $id)
     {
-        $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteEsterno');
-        $p = USingleton::getInstance('FPersistentManager')->getPercorso($id);
-        USingleton::getInstance('FPersistentManager')->eliminaPercorso($id);
-        $this->getMyInbox();
-        $this->inviaMail($u->username, 'percorso', 'rifiutato', $p->id, $u->email);
+        if (USingleton::getInstance('USession')->leggi_valore('tipoUtente') == 'UtenteInterno') {
+            $p = USingleton::getInstance('FPersistentManager')->getPercorso($id);
+            $u = USingleton::getInstance('FPersistentManager')->getUtente($p->creatore, 'UtenteEsterno');
+            USingleton::getInstance('FPersistentManager')->eliminaPercorso($id);
+            $this->getMyInbox();
+            $this->inviaMail($u->username, 'percorso', 'rifiutato', $p->id, $u->email);
+        } else
+            throw new Exception();
     }
 
     /**
      * rifiuta un account ed invia una mail di conferma all'utente
      * @param int $id id dell'account
      * @param string $tipo
+     * @throws Exception
      */
     public function rifiutaUtente(int $id, string $tipo)
     {
-        if ($tipo == 'moderatore')
-            $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteInterno');
-        else
-            $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteEsterno');
-        USingleton::getInstance('FPersistentManager')->eliminaUtente($id, $tipo);
-        $this->getMyInbox();
-        $this->inviaMail($u->username, 'account', 'rifiutato', $u->id, $u->email);
+        if (USingleton::getInstance('USession')->leggi_valore('tipoUtente') == 'UtenteInterno') {
+            if ($tipo == 'moderatore')
+                $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteInterno');
+            else
+                $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteEsterno');
+            USingleton::getInstance('FPersistentManager')->eliminaUtente($id, $tipo);
+            $this->getMyInbox();
+            $this->inviaMail($u->username, 'account', 'rifiutato', $u->id, $u->email);
+        } else
+            throw new Exception();
     }
 
     /**
@@ -106,11 +128,11 @@ class CInbox
         $mail = new PHPMailer(true);
         $message = 'Ciao, ' . $username . ', ti informiamo che il tuo ' . $cosa . 'è stato ' . $come . '.';
         if ($come == 'approvato') {
-            $message = $message . 'clicca sul link per visualizzarlo. ' . $config['url'] . '?controller=';
-            if ($cosa == 'percorso')
-                $message = $message . 'Utente&task=getPaginaUtente&id=' . $id;
+            $message = $message . 'clicca sul link per visualizzarlo. ' . $config['url'] ;
+            if ($cosa == 'account')
+                $message = $message . 'Utente/getPaginaUtente/' . $id;
             else
-                $message = $message . 'VisualizzaPercorso&task=impostaPaginaVisualizzazione&id=' . $id;;
+                $message = $message . 'VisualizzaPercorso/impostaPaginaVisualizzazione/' . $id;
         } else
             $message = $message . ' Riprova assicurandoti di rispettare le norme del regolamento';
 

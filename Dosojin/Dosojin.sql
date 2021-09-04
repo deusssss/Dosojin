@@ -85,7 +85,7 @@ CREATE TABLE percorsiSeguiti
 (
     ID_utente         INTEGER REFERENCES utenteEsterno (id),
     ID_percorso       INTEGER REFERENCES percorso (id),
-    ID_tappa_corrente INTEGER REFERENCES tappa (ID_tappa, ID_percorso),
+    ID_tappa_corrente INTEGER,
     PRIMARY KEY (ID_utente, ID_percorso)
 );
 

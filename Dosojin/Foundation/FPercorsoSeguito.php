@@ -22,7 +22,11 @@ class FPercorsoSeguito extends FDB
         $this->paramNames = array('ID_utente', 'ID_percorso', 'ID_tappa_corrente');
     }
 
-    public function extractParams($obj)
+    /**
+     * @param  $obj
+     * @return array
+     */
+    public function extractParams($obj): array
     {
         $parameters = array();
         foreach ($this->paramNames as $param) {

@@ -18,9 +18,9 @@ class FPersistentManager
      *
      * @param string $username
      * @param string $password
-     * @return bool
+     * @return bool|EUtenteInterno|EUtenteEsterno
      */
-    public function logUtente(string $username, string $password): bool
+    public function logUtente(string $username, string $password): bool|EUtenteInterno|EUtenteEsterno
     {
         if (USingleton::getInstance('FUtenteEsterno')->exists(array('username' => $username, 'password' => $password)))
             $userType = 'FUtenteEsterno';
@@ -273,10 +273,10 @@ class FPersistentManager
      */
     public function seguiPercorso(int $userID, int $idPercorso)
     {
-        if (!USingleton::getInstance('FPercorsoSeguito')->exists(array('ID_utente' => $userID, 'ID_percorso' => $idPercorso)))
-            USingleton::getInstance('FPercorsoSeguito')->store(array('ID_utente' => $userID, 'ID_percorso' => $idPercorso, 'ID_tappa_corrente' => 0));
-        else
-            USingleton::getInstance('FPercorsoSeguito')->update(array('ID_utente' => $userID, 'ID_percorso' => $idPercorso, 'ID_tappa_corrente' => 0), array('ID_utente' => $userID));
+        if (USingleton::getInstance('FPercorsoSeguito')->exists(array('ID_utente' => $userID, 'ID_percorso' => $idPercorso)))
+            USingleton::getInstance('FPercorsoSeguito')->delete(array('ID_utente' => $userID));
+
+        USingleton::getInstance('FPercorsoSeguito')->store(array('ID_utente' => $userID, 'ID_percorso' => $idPercorso, 'ID_tappa_corrente' => 0));
 
     }
 

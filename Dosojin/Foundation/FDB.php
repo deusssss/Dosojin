@@ -14,19 +14,19 @@ class FDB
     /**
      * @var PDO $connection oggetto rappresentante la connessione al database
      */
-    private $connection;
+    private PDO $connection;
     /**
      * @var string $tableName nome della tabella sulla quale agisce la classe
      */
-    protected $tableName;
+    protected string $tableName;
     /**
      * @var array $paramNames array contenente nomi delle colonne nel db
      */
-    protected $paramNames;
+    protected array $paramNames;
     /**
      * @var string $returnType tipo dell'oggetto da restituire nella ricerca
      */
-    protected $returnType;
+    protected string $returnType;
 
     /**
      * 1 - recupera i dati per la connessione al db dall'array gloabale di configurazione
@@ -41,10 +41,10 @@ class FDB
     /**
      * estrae da un oggetto tutti i parametri eespressi nell'array contenti i loro nomi e li restituisce come array
      *
-     * @param object $obj oggetto da cui estrarre i parametri
+     * @param $obj
      * @return array
      */
-    public function extractParams($obj)
+    public function extractParams($obj): array
     {
         $parameters = array();
         foreach ($this->paramNames as $param) {
@@ -56,10 +56,10 @@ class FDB
     /**
      * dato il risultato di una quesry lo trasforma in un array di oggetti del tipo della classe figlia
      *
-     * @param $arr
+     * @param array $arr
      * @return array
      */
-    private function Arr2Obj($arr)
+    private function Arr2Obj(array $arr): array
     {
         $obj = array();
         $c = 0;
@@ -81,7 +81,7 @@ class FDB
      * @param String $password password per l'accesso
      * @param string $db nome del database
      */
-    private function connect($host, $username, $password, $db)
+    private function connect(string $host, string $username, string $password, string $db)
     {
         $this->connection = new PDO('mysql:host=' . $host . ';dbname=' . $db, $username, $password);
 
@@ -91,6 +91,8 @@ class FDB
      * 1 - recupera i parametri dall'oggetto
      * 2 - componi la stringa per la query
      * 3 - chiama il metodo query per salvare la riga
+     *
+     * @param $obj
      *
      */
     public function store($obj)
@@ -115,8 +117,9 @@ class FDB
      * 3 - chiama il metodo query per aggiornare la riga
      *
      * @param array $keys la/le chiave/i primaria/e della tabella ed i relativi valori
+     * @param $obj
      */
-    public function update($obj, $keys)
+    public function update($obj, array $keys)
     {
         $params = $this->extractParams($obj);
         $query = 'UPDATE ' . $this->tableName . ' SET ';
@@ -137,10 +140,9 @@ class FDB
      * 3 - restituisce true se la query non è vuota
      *
      * @param array $keys la lista delle coppie chiave valore da cercare
-     * @param string $type stringa contenente i tipi dei valori da cercare
      * @return boolean
      */
-    public function exists($keys)
+    public function exists(array $keys): bool
     {
         $query = 'SELECT * FROM ' . $this->tableName . ' WHERE ';
         foreach ($keys as $key => $value) {
@@ -158,9 +160,10 @@ class FDB
      *
      * @param array $where lista di coppie chiave-valore contenenti le clausole per la ricerca
      * @param array $order lista dei valori in base al quale ordinare
+     * @param bool $obj
      * @return array
      */
-    public function search($where, $order = array(), $obj = true)
+    public function search(array $where, array $order = array(), bool $obj = true): array
     {
         $query = 'SELECT * FROM ' . $this->tableName . ' WHERE ';
         foreach ($where as $key => $value) {
@@ -187,7 +190,7 @@ class FDB
      *
      * @param array $where lista di coppie chiave-valore contenenti le clausole per la ricerca
      */
-    public function delete($where)
+    public function delete(array $where)
     {
         $query = 'DELETE FROM ' . $this->tableName . ' WHERE ';
         foreach ($where as $key => $value) {
@@ -206,9 +209,9 @@ class FDB
      * @param string $query query pronta per essere preparata
      * @param array $param lista dei parametri da collegare
      * @param boolean $return se restituire o meno un risultato
-     * @return array
+     * @return array|null
      */
-    private function query($query, $param, $return)
+    private function query(string $query, array $param, bool $return): array|null
     {
         $stmt = $this->connection->prepare($query);
 
@@ -216,8 +219,9 @@ class FDB
             $stmt->bindValue($i, $param[$i - 1]);
         }
         $stmt->execute();
-        if ($return) {
+        if ($return)
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
+        else
+            return null;
     }
 }

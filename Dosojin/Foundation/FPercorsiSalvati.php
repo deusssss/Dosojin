@@ -21,7 +21,12 @@ class FPercorsiSalvati extends FDB
         $this->tableName = 'percorsiSalvati';
         $this->paramNames = array('ID_utente', 'ID_percorso');
     }
-    public function extractParams($obj)
+
+    /**
+     * @param  $obj
+     * @return array
+     */
+    public function extractParams($obj): array
     {
         $parameters = array();
         foreach ($this->paramNames as $param) {

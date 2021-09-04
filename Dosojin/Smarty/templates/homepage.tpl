@@ -62,14 +62,8 @@
                             </li>
                         {/if}
                         <li class="nav-item">
-                            {if $userType=='interno'}
-                                <a class="nav-link"
-                                   href="Utente/getPaginaUtente/{$idUtente}/true">{$username}</a>
-                            {/if}
-                            {if $userType!='interno'}
-                                <a class="nav-link"
-                                   href="Utente/getPaginaUtente/{$idUtente}">{$username}</a>
-                            {/if}
+                            <a class="nav-link"
+                               href="Utente/getPaginathisUtente">{$username}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Logout/logout">Logout</a>

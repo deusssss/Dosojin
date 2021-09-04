@@ -20,34 +20,49 @@ class CRegistrazione
 {
     /**
      * visualizza la form di registrazione tramite la view
+     * @throws Exception
      */
     public function getSignUpForm()
     {
-        USingleton::getInstance('VRegistrazione')->mostraFormRegistrazione();
+
+        if (USingleton::getInstance('USession')->leggi_valore('idUtente') == false)
+            USingleton::getInstance('VRegistrazione')->mostraFormRegistrazione();
+        else
+            throw new Exception();
     }
 
     /**
      * visualizza la form di registrazione per moderatori tramite la view
+     * @throws Exception
      */
     public function getSignUpFormMod()
     {
-        USingleton::getInstance('VRegistrazione')->mostraFormRegistrazione('', true);
+        if (USingleton::getInstance('USession')->leggi_valore('idUtente') == false)
+            USingleton::getInstance('VRegistrazione')->mostraFormRegistrazione('', true);
+        else
+            throw new Exception();
     }
 
     /**
      * in base al tipo di utente valuta diversamente la richiesta di iscrizione
+     * @throws Exception
      */
     public function valutaRichiesta()
     {
-        if (isset($_POST['azienda'])) $this->valutaRichiestaAzienda();
-        else if (isset($_POST['mod'])) $this->valutaRichiestaMod();
-        else  $this->valutaRichiestaUser();
+        if (USingleton::getInstance('USession')->leggi_valore('idUtente') == false) {
+            if (isset($_POST['azienda'])) $this->valutaRichiestaAzienda();
+            else if (isset($_POST['mod'])) $this->valutaRichiestaMod();
+            else
+                $this->valutaRichiestaUser();
+        } else
+            throw new Exception();
     }
 
     /**
      * nel caso di un moderatore crea l'account non approvato e reindirizza alla home
      */
-    public function valutaRichiestaMod()
+    public
+    function valutaRichiestaMod()
     {
         if ($_POST['password'] != $_POST['confirm_password']) {
             USingleton::getInstance('VRegistrazione')->mostraFormRegistrazione('La password e la conferma non coincidono');
@@ -72,7 +87,8 @@ class CRegistrazione
     /**
      * nel caso di un azienda crea l'account non approvato e reindirizza alla home
      */
-    public function valutaRichiestaAzienda()
+    public
+    function valutaRichiestaAzienda()
     {
         if ($_POST['password'] != $_POST['confirm_password']) {
             USingleton::getInstance('VRegistrazione')->mostraFormRegistrazione('La password e la conferma non coincidono');
@@ -98,8 +114,10 @@ class CRegistrazione
 
     /**
      * nel caso di un utente crea l'account non approvatoe  reindirizza alla home, quindi invia una email di conferma
+     * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function valutaRichiestaUser()
+    public
+    function valutaRichiestaUser()
     {
         if ($_POST['password'] != $_POST['confirm_password']) {
             USingleton::getInstance('VRegistrazione')->mostraFormRegistrazione('La password e la conferma non coincidono');
@@ -125,7 +143,7 @@ class CRegistrazione
 
                 $mail = new PHPMailer(true);
                 $message = 'Ciao, ' . $_POST['username'] . ', e benvenuto in Dosojin,
-                    clicca sul link per attivare il tuo acount ' . $config['url'] . '/?controller=Login&task=attiva&id=' . $stat->id;
+                    clicca sul link per attivare il tuo acount ' . $config['url'] . 'Login/attiva/' . $stat->id;
 
 
                 $mail->IsSMTP();
