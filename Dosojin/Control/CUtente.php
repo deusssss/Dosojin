@@ -17,7 +17,7 @@ class CUtente
      * @param int $id l'id dell'utente
      * @param false $int se si tratta di un utente interno
      */
-    public function getPaginaUtente($id, $int = false)
+    public function getPaginaUtente(int $id, bool $int = false)
     {
         if ($int)
             $user = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteInterno');

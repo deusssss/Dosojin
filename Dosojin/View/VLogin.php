@@ -16,7 +16,7 @@ class VLogin extends View
      * @throws SmartyException
      */
 
-    public function mostraFormLogin($errmex='')
+    public function mostraFormLogin(string $errmex='')
     {
         $this->assign('errmex', $errmex);
         $this->display('formlogin.tpl');

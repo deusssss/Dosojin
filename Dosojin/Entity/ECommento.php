@@ -7,7 +7,7 @@ class ECommento
      */
 public $id;
     /**
-     * @var EUtenteEsterno $utente utente che ha lasciato il commento
+     * @var int $utente utente che ha lasciato il commento
      */
 public $utente;
     /**

@@ -16,7 +16,7 @@ class CPercorso
      *
      * @param int $id l'id del percorso
      */
-    public function salvaPercorso($id)
+    public function salvaPercorso(int $id)
     {
         USingleton::getInstance('FPersistentManager')->aggiungiPercorsoASalvati(USingleton::getInstance('USession')->leggi_valore('idUtente'), $id);
         USingleton::getInstance('CUtente')->getPaginathisUtente();
@@ -27,7 +27,7 @@ class CPercorso
      *
      * @param int $id l'id del percorso
      */
-    public function nascondiPercorso($id)
+    public function nascondiPercorso(int $id)
     {
         USingleton::getInstance('FPersistentManager')->nascondiPercorso($id);
         USingleton::getInstance('CUtente')->getPaginathisUtente();
@@ -38,7 +38,7 @@ class CPercorso
      *
      * @param int $id l'id del percorso
      */
-    public function mostraPercorso($id)
+    public function mostraPercorso(int $id)
     {
         USingleton::getInstance('FPersistentManager')->mostraPercorso($id);
         USingleton::getInstance('CUtente')->getPaginathisUtente();
@@ -60,7 +60,7 @@ class CPercorso
      *
      * @param int $id l'id del percorso
      */
-    public function eliminaPercorso($id)
+    public function eliminaPercorso(int $id)
     {
         if (USingleton::getInstance('FPersistentManager')->getPercorso($id)->creatore == USingleton::getInstance('USession')->leggi_valore('idUtente')) {
             USingleton::getInstance('FPersistentManager')->eliminaPercorso($id);

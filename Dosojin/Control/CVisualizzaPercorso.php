@@ -19,7 +19,7 @@ class CVisualizzaPercorso
      * @param int $tappa id della tappa da mostrare
      * @param false $seguito se il percorso visualizzato è il seguito
      */
-    public function impostaPaginaVisualizzazione($id, $tappa = 0, $seguito = false)
+    public function impostaPaginaVisualizzazione(int $id, int $tappa = 0, bool $seguito = false)
     {
 
 

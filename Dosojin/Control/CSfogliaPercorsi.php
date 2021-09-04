@@ -31,8 +31,10 @@ class CSfogliaPercorsi
 
     /**
      * recupera tutti i percorsi salvati dall'utente e li visualizza tramite la view
+     *
+     * @param int $id
      */
-    public function getPercorsiSalvati($id)
+    public function getPercorsiSalvati(int $id)
     {
         $sessionID = USingleton::getInstance('USession')->leggi_valore('idUtente');
         if ($sessionID != false) {

@@ -15,7 +15,7 @@ class VInbox extends View
      * @param array $inbox percorsi o utenti da approvare
      * @throws SmartyException
      */
-    public function mostraInbox($user, $inbox)
+    public function mostraInbox(EUtenteInterno $user, array $inbox)
     {
         $this->impostaLayout();
         $in = array();

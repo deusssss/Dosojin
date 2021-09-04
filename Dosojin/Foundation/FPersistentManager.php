@@ -18,9 +18,9 @@ class FPersistentManager
      *
      * @param string $username
      * @param string $password
-     * @return boolean|false
+     * @return bool
      */
-    public function logUtente($username, $password)
+    public function logUtente(string $username, string $password): bool
     {
         if (USingleton::getInstance('FUtenteEsterno')->exists(array('username' => $username, 'password' => $password)))
             $userType = 'FUtenteEsterno';
@@ -37,7 +37,7 @@ class FPersistentManager
      * @param EUtenteEsterno|EUtenteInterno $utente
      * @return EUtenteEsterno|EUtenteInterno|string
      */
-    public function nuovoUtente($utente)
+    public function nuovoUtente(EUtenteEsterno|EUtenteInterno $utente): EUtenteEsterno|EUtenteInterno|string
     {
         if (USingleton::getInstance('FUtenteInterno')->exists(array('username' => $utente->username)) || USingleton::getInstance('FUtenteEsterno')->exists(array('username' => $utente->username)))
             return 'Nome utente già utilizzato';
@@ -61,7 +61,7 @@ class FPersistentManager
      * @param int $intUserID l'ID dell'utente interno che richiede la sua inbox
      * @return array|false
      */
-    public function getInbox($intUserID)
+    public function getInbox(int $intUserID): bool|array
     {
         if (USingleton::getInstance('FUtenteInterno')->search(array('id' => $intUserID))[0]->ruolo == 'amministratore')
             return array_merge(USingleton::getInstance('FUtenteInterno')->search(array('account_attivo' => 0)), USingleton::getInstance('FUtenteEsterno')->search(array('account_attivo' => 0, 'tipo' => 'azienda'), array('data_iscrizione')));
@@ -76,10 +76,11 @@ class FPersistentManager
      * 2 - attiva l'account sul db
      * 3 - restituisce true se tutto è andato a buon fine
      *
-     * @param EUtenteEsterno|EUtenteInterno $user oggetto utente in questione
+     * @param int $id
+     * @param string $tipo
      * @return bool
      */
-    public function approvaUtente($id, $tipo = 'utente')
+    public function approvaUtente(int $id, string $tipo = 'utente'): bool
     {
         if ($tipo == 'moderatore' && USingleton::getInstance('FUtenteInterno')->exists(array('id' => $id))) {
             $userType = 'FUtenteInterno';
@@ -99,9 +100,10 @@ class FPersistentManager
      * 2 - se esiste ne restituisce l'oggetto altrimenti restituisce false
      *
      * @param int $id identificativo dell'utente
+     * @param string $tipo tipo di utente
      * @return EUtenteEsterno|EUtenteInterno|false
      */
-    public function getUtente($id, $tipo)
+    public function getUtente(int $id, string $tipo): EUtenteEsterno|bool|EUtenteInterno
     {
         if (USingleton::getInstance('F' . $tipo)->exists(array('id' => $id)))
             return (USingleton::getInstance('F' . $tipo)->search(array('id' => $id)))[0];
@@ -109,7 +111,14 @@ class FPersistentManager
 
     }
 
-    public function approvaPercorso($id)
+    /**
+     * 1 - recupera il percorso indicato
+     * 2 - lo imposta come attivo e visibile
+     * 3 - aggiorna il database
+     * @param int $id
+     * @return bool
+     */
+    public function approvaPercorso(int $id): bool
     {
         if (USingleton::getInstance('FPercorso')->exists(array('id' => $id))) {
             $percorso = $this->getPercorso($id);
@@ -121,7 +130,14 @@ class FPersistentManager
             return false;
     }
 
-    public function getPercorso($id)
+    /**
+     * 1 - recupera il percorso
+     * 2 - associa i parametri necessari dalle altre tabelle
+     * 3 - restituisce il percorso
+     * @param int $id id del percorso
+     * @return false|EPercorso
+     */
+    public function getPercorso(int $id): EPercorso|bool
     {
         $percorso = USingleton::getInstance('FPercorso')->search(array('id' => $id));
         if (count($percorso) == 0)
@@ -135,7 +151,14 @@ class FPersistentManager
         }
     }
 
-    public function getAllPercorsi($filtri, $ordinamento)
+    /**
+     * recupera i percorsi, filtrandoli ed ordinandoli se richiesto
+     *
+     * @param array $filtri
+     * @param array $ordinamento
+     * @return array
+     */
+    public function getAllPercorsi(array $filtri, array $ordinamento): array
     {
         $percorsi = USingleton::getInstance('FPercorso')->search(array_merge(array('visibile' => 1), $filtri), $ordinamento);
         foreach ($percorsi as $p) {
@@ -146,8 +169,13 @@ class FPersistentManager
         return $percorsi;
     }
 
-
-    public function getPercorsiSalvati($idUtente, $filtri = array())
+    /**
+     * recupera i percorsi salvati da un utente
+     * @param int $idUtente
+     * @param array $filtri
+     * @return array
+     */
+    public function getPercorsiSalvati(int $idUtente, array $filtri = array()): array
     {
         $PID = USingleton::getInstance('FPercorsiSalvati')->search(array('ID_utente' => $idUtente), $filtri, false);
         if (count($PID) == 0)
@@ -161,7 +189,13 @@ class FPersistentManager
         }
     }
 
-    public function nuovoPercorso($percorso)
+    /**
+     * aggiunge un nuovo percorso nel database
+     *
+     * @param EPercorso $percorso
+     * @return int
+     */
+    public function nuovoPercorso(EPercorso $percorso): int
     {
         USingleton::getInstance('FPercorso')->store($percorso);
         $PercorsoDB = USingleton::getInstance('FPercorso')->search(array('nome' => $percorso->nome, 'creatore' => $percorso->creatore))[0];
@@ -177,8 +211,14 @@ class FPersistentManager
         return $PercorsoDB->id;
     }
 
-
-    public function EsisteNomePercorso($idUtente, $nome)
+    /**
+     * controlla se un ercorso con un dato nome esiste per un dato utente
+     *
+     * @param int $idUtente
+     * @param string $nome
+     * @return bool
+     */
+    public function EsisteNomePercorso(int $idUtente, string $nome): bool
     {
         if (USingleton::getInstance('FPercorso')->exists(array('creatore' => $idUtente, 'nome' => $nome)))
             return true;
@@ -186,8 +226,13 @@ class FPersistentManager
             return false;
     }
 
-
-    public function getPercorsiDiUtente($id)
+    /**
+     * restituisce tutti i percorsi creati da un utente
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getPercorsiDiUtente(int $id): array
     {
         $percorsi = USingleton::getInstance('FPercorso')->search(array('creatore' => $id), array('nome'));
         foreach ($percorsi as $p) {
@@ -198,27 +243,49 @@ class FPersistentManager
         return $percorsi;
     }
 
-    public function pubblicaCommento($commento)
+    /**
+     * inserisce un commento nel database
+     *
+     * @param ECommento $commento
+     */
+    public function pubblicaCommento(ECommento $commento)
     {
         USingleton::getInstance('FCommento')->store($commento);
     }
 
-    public function aggiungiPercorsoASalvati($userID, $id)
+    /**
+     * aggiunge un percorso ai salvati di un utente
+     *
+     * @param int $userID
+     * @param int $idPercorso
+     */
+    public function aggiungiPercorsoASalvati(int $userID, int $idPercorso)
     {
-        if (!USingleton::getInstance('FPercorsiSalvati')->exists(array('ID_utente' => $userID, 'ID_percorso' => $id)))
-            USingleton::getInstance('FPercorsiSalvati')->store(array('ID_utente' => $userID, 'ID_percorso' => $id));
+        if (!USingleton::getInstance('FPercorsiSalvati')->exists(array('ID_utente' => $userID, 'ID_percorso' => $idPercorso)))
+            USingleton::getInstance('FPercorsiSalvati')->store(array('ID_utente' => $userID, 'ID_percorso' => $idPercorso));
     }
 
-    public function seguiPercorso($userID, $id)
+    /**
+     * imposta un percorso come seguito di un utente
+     *
+     * @param int $userID
+     * @param int $idPercorso
+     */
+    public function seguiPercorso(int $userID, int $idPercorso)
     {
-        if (!USingleton::getInstance('FPercorsoSeguito')->exists(array('ID_utente' => $userID, 'ID_percorso' => $id)))
-            USingleton::getInstance('FPercorsoSeguito')->store(array('ID_utente' => $userID, 'ID_percorso' => $id, 'ID_tappa_corrente' => 0));
+        if (!USingleton::getInstance('FPercorsoSeguito')->exists(array('ID_utente' => $userID, 'ID_percorso' => $idPercorso)))
+            USingleton::getInstance('FPercorsoSeguito')->store(array('ID_utente' => $userID, 'ID_percorso' => $idPercorso, 'ID_tappa_corrente' => 0));
         else
-            USingleton::getInstance('FPercorsoSeguito')->update(array('ID_utente' => $userID, 'ID_percorso' => $id, 'ID_tappa_corrente' => 0), array('ID_utente' => $userID));
+            USingleton::getInstance('FPercorsoSeguito')->update(array('ID_utente' => $userID, 'ID_percorso' => $idPercorso, 'ID_tappa_corrente' => 0), array('ID_utente' => $userID));
 
     }
 
-    public function nascondiPercorso($id)
+    /**
+     * rende un percorso invisibile
+     *
+     * @param int $id
+     */
+    public function nascondiPercorso(int $id)
     {
 
         $percorso = $this->getPercorso($id);
@@ -226,7 +293,12 @@ class FPersistentManager
         USingleton::getInstance('FPercorso')->update($percorso, array('id' => $percorso->id));
     }
 
-    public function mostraPercorso($id)
+    /**
+     * rende un percorso visibile
+     *
+     * @param int $id
+     */
+    public function mostraPercorso(int $id)
     {
         $percorso = $this->getPercorso($id);
         $percorso->visibile = 1;
@@ -234,18 +306,28 @@ class FPersistentManager
 
     }
 
-    public function getPercorsoSeguito($idUtente)
+    /**
+     * restituisce il percorso seguito da un utente
+     *
+     * @param int $idUtente
+     * @return array|false
+     */
+    public function getPercorsoSeguito(int $idUtente): bool|array
     {
         $PID = USingleton::getInstance('FPercorsoSeguito')->search(array('ID_utente' => $idUtente), array(), false)[0];
         if (count($PID) == 0)
             return false;
         else {
-            $percorso = array('percorso' => $this->getPercorso($PID['ID_percorso']), 'tappa' => $PID['ID_tappa_corrente']);
-            return $percorso;
+            return array('percorso' => $this->getPercorso($PID['ID_percorso']), 'tappa' => $PID['ID_tappa_corrente']);
         }
     }
 
-    public function prossimaTappaSeguito($userID)
+    /**
+     * imposta la prossima tappa del percorso seguito da un utente
+     *
+     * @param int $userID
+     */
+    public function prossimaTappaSeguito(int $userID)
     {
         $percorso = $this->getPercorsoSeguito($userID);
         $percorso['tappa'] += 1;
@@ -253,8 +335,12 @@ class FPersistentManager
 
     }
 
-
-    public function eliminaPercorso($id)
+    /**
+     * elimina un percorso
+     *
+     * @param int $id
+     */
+    public function eliminaPercorso(int $id)
     {
         if (USingleton::getInstance('FPercorso')->exists(array('id' => $id))) {
             $percorso = $this->getPercorso($id);
@@ -265,7 +351,13 @@ class FPersistentManager
         }
     }
 
-    public function eliminaUtente($id, $tipo = 'utente')
+    /**
+     * elimina un account
+     *
+     * @param int $id
+     * @param string $tipo
+     */
+    public function eliminaUtente(int $id, string $tipo = 'utente')
     {
         if ($tipo == 'moderatore' && USingleton::getInstance('FUtenteInterno')->exists(array('id' => $id))) {
             $userType = 'FUtenteInterno';
@@ -281,7 +373,12 @@ class FPersistentManager
         USingleton::getInstance('FPercorsiSalvati')->delete(array('ID_utente' => $id));
     }
 
-    public function aggiornaUtente($utente)
+    /**
+     * aggiorna le informazioni di un utente
+     *
+     * @param EUtenteEsterno|EUtenteInterno $utente
+     */
+    public function aggiornaUtente(EUtenteEsterno|EUtenteInterno $utente)
     {
         if (get_class($utente) == 'EUtenteEsterno')
             $userType = 'FUtenteEsterno';

@@ -13,6 +13,7 @@ class VHome extends View
 {
     /**
      * visualizza la pagia home
+     * @throws SmartyException
      */
     public function mostraPaginaHome()
     {

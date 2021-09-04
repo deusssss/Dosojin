@@ -19,9 +19,9 @@ class ETappa
      */
     public $indirizzo;
     /**
-     * @var int $permanenza_consigliata permanenza consigliata nella tappa, espressa in minuti
+     * @var int $permanenza_consigliata permanenza consigliata nella tappa
      */
-    public $permanenza_consigliata;
+    public string $permanenza_consigliata;
     /**
      * @var string $informazioni informazioni aggiuntive sulla tappa
      */

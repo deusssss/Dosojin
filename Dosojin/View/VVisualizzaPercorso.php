@@ -13,11 +13,11 @@ class VVisualizzaPercorso extends View
     /**
      * mostra la scheda di un percorso
      * @param EPercorso $percorso
-     * @param ETappa $tappa la tappa da mostrare
+     * @param int $tappa la tappa da mostrare
      * @param boolean $seguito se si tratta della tappa del percorso seguito
      * @throws SmartyException
      */
-    public function mostraSchedaPercorso($percorso, $tappa, $seguito = false)
+    public function mostraSchedaPercorso(EPercorso $percorso, int $tappa, bool $seguito = false)
     {
 
         $arrayPercorso = array(

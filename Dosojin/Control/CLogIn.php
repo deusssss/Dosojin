@@ -14,9 +14,9 @@ class CLogin
     /**
      * attiva l'account di un utente esterno
      *
-     * @param $id id utente
+     * @param int $id id utente
      */
-    public function attiva($id)
+    public function attiva(int $id)
     {
         if (USingleton::getInstance('FPersistentManager')->approvaUtente($id))
             $this->getLoginForm();
@@ -30,7 +30,7 @@ class CLogin
      *
      * @param string $text informazioni su eventuali errori
      */
-    public function getLoginForm($text = '')
+    public function getLoginForm(string $text = '')
     {
         USingleton::getInstance('VLogin')->mostraFormLogin($text);
     }

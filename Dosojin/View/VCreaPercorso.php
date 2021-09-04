@@ -13,10 +13,10 @@ class VCreaPercorso extends View
     /**
      * imposta la pagina per la creazione del percorso
      *
-     * @param $errmex
+     * @param string $errmex
      * @throws SmartyException
      */
-    public function impostaFormCrea($errmex)
+    public function impostaFormCrea(string $errmex)
     {
         $this->impostaLayout();
         $this->assign('errmex', $errmex);
@@ -30,7 +30,7 @@ class VCreaPercorso extends View
      * @param string $errmex eventuali errori
      * @throws SmartyException
      */
-    public function impostaFormEditNewPercorso($percorso, $errmex)
+    public function impostaFormEditNewPercorso(EPercorso $percorso, string $errmex)
     {
         $arrayTappe = array();
         $arrayTrasporti = array();
@@ -74,7 +74,7 @@ class VCreaPercorso extends View
      * @param int $id id del percorso
      * @throws SmartyException
      */
-    public function mostraSchedaConferma($id)
+    public function mostraSchedaConferma(int $id)
     {
         $this->impostaLayout();
         $this->assign('id', $id);

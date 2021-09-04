@@ -16,7 +16,7 @@ class CCreaPercorso
      *
      * @param string $errmex messaggio di errore da stampare nel caso qualcos non sia andato a buoon fine
      */
-    public function getFormCreaPercorso($errmex = '')
+    public function getFormCreaPercorso(string $errmex = '')
     {
 
         USingleton::getInstance('VCreaPercorso')->impostaFormCrea($errmex);
@@ -61,7 +61,7 @@ class CCreaPercorso
      *
      * @param string $errmex messaggio di errore da visualizzare all'utente
      */
-    public function editNewPercorso($errmex = '')
+    public function editNewPercorso(string $errmex = '')
     {
 
         $percorso = USingleton::getInstance('USession')->leggi_valore('percorso creato');
@@ -102,7 +102,7 @@ class CCreaPercorso
      * @param ETappa $lastTappa l'ultima tappa aggiunta
      * @return bool se le tappe sono uguali
      */
-    private function checkReloadTappa($tappa, $lastTappa)
+    private function checkReloadTappa(ETappa $tappa, ETappa $lastTappa): bool
     {
         if ($tappa->nome != $lastTappa->nome)
             return true;
@@ -121,11 +121,11 @@ class CCreaPercorso
     /**
      * controlla se il trasporto aggiunto è uguale all'ultimo trasporto aggiunto
      *
-     * @param ETrasporto trasporto trasporto aggiunto
+     * @param ETrasporto $trasporto trasporto aggiunto
      * @param ETrasporto $lastTrasporto l'ultimo trasporto aggiunto
      * @return bool se i trasporti sono uguali
      */
-    private function checkReloadTrasporto($trasporto, $lastTrasporto)
+    private function checkReloadTrasporto(ETrasporto $trasporto, ETrasporto $lastTrasporto): bool
     {
         if ($trasporto->mezzo != $lastTrasporto->mezzo)
             return true;

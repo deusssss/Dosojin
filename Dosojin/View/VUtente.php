@@ -13,11 +13,11 @@ class VUtente extends View
     /**
      * visualizza una pagina utente
      *
-     * @param EUtenteInterno|EUtenteEsterno $user
+     * @param EUtenteEsterno|EUtenteInterno $user
      * @param array $percorsiCreati lista dei percorsi creati dall'utente
      * @throws SmartyException
      */
-    public function mostraPaginaUtente($user, $percorsiCreati){
+    public function mostraPaginaUtente(EUtenteEsterno|EUtenteInterno $user, array $percorsiCreati){
 
         if (get_class($user) == 'EUtenteEsterno') {
             $userArray = array(

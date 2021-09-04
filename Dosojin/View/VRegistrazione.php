@@ -16,7 +16,7 @@ class VRegistrazione extends View
      * @param boolean $mod se la pagina richiesta è quella di registrazione per moderatori
      * @throws SmartyException
      */
-    public function mostraFormRegistrazione($errmex = '', $mod = false)
+    public function mostraFormRegistrazione(string $errmex = '', bool $mod = false)
     {
         $this->assign('mod', $mod);
         $this->assign('error', $errmex);

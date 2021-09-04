@@ -14,7 +14,7 @@ class EPercorso
      */
     public $nome;
     /**
-     * @var EutenteEsterno $creatore il creatore del percorso
+     * @var int $creatore il creatore del percorso
      */
     public $creatore;
     /**

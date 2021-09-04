@@ -44,7 +44,7 @@ CREATE TABLE commento
     rating   INTEGER NOT NULL DEFAULT 0,
     testo    TEXT    NOT NULL,
     percorso INTEGER REFERENCES percorso (id),
-    data     TEXT    NOT NULL
+    data     DATE    NOT NULL
 );
 
 CREATE TABLE utenteEsterno

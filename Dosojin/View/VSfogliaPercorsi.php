@@ -17,7 +17,7 @@ class VSfogliaPercorsi extends View
      * @param boolean $salvati se si tratta di una lista di percorsi salvati
      * @throws SmartyException
      */
-    public function impostaPaginaSfoglia($percorsi, $salvati = false)
+    public function impostaPaginaSfoglia(array $percorsi, bool $salvati = false)
     {
         $percorsiArray = array();
         foreach ($percorsi as $p)

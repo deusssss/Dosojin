@@ -24,7 +24,7 @@ class FDB
      */
     protected $paramNames;
     /**
-     * @var array $returnType tipo dell'oggetto da restituire nella ricerca
+     * @var string $returnType tipo dell'oggetto da restituire nella ricerca
      */
     protected $returnType;
 

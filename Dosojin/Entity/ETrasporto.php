@@ -17,7 +17,7 @@ class ETrasporto
     /**
      * @var int $partenza la tappa di partenza
      */
-    public $partenza;
+    public$partenza;
     /**
      * @var int $arrivo la tappa di arrivo
      */

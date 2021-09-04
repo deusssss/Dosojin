@@ -14,9 +14,9 @@ class CError
     /**
      * 1 - assegna il messaggio di errore alla pagina
      * 2 - visualizza la schermata di errore tramite la view
-     * @param $errore
+     * @param string $errore
      */
-    public function impostaPaginaErrore($errore)
+    public function impostaPaginaErrore(string $errore)
     {
         $errore = match ($errore) {
             'classe' => 'Non abbiamo nessuna scimmia che possa soddisfare la tua richiesta, se hai inserito un URL manualmente controlla di non aver commesso errori di digitazione',

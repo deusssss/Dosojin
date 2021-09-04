@@ -17,7 +17,7 @@ class VErrore extends View
      * @param string $errmex messaggio di errore
      * @throws SmartyException
      */
-    public function visualizzaPaginaErrore($errmex){
+    public function visualizzaPaginaErrore(string $errmex){
 
         $this->impostaLayout();
         $this->assign('errmex', $errmex);

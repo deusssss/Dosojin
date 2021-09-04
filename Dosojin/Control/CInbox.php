@@ -33,7 +33,7 @@ class CInbox
      * attiva un percorso ed invia una mail di conferma al creatore
      * @param int $id id del percorso
      */
-    public function attivaPercorso($id)
+    public function attivaPercorso(int $id)
     {
         USingleton::getInstance('FPersistentManager')->approvaPercorso($id);
         $p = USingleton::getInstance('FPersistentManager')->getPercorso($id);
@@ -45,8 +45,9 @@ class CInbox
     /**
      * attiva un account ed invia una mail di conferma all'utente
      * @param int $id id dell'account
+     * @param string $tipo
      */
-    public function attivaUtente($id, $tipo)
+    public function attivaUtente(int $id, string $tipo)
     {
         if ($tipo == 'moderatore')
             $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteInterno');
@@ -61,7 +62,7 @@ class CInbox
      * rifiuta un percorso ed invia una mail di conferma al creatore
      * @param int $id id del percorso
      */
-    public function rifiutaPercorso($id)
+    public function rifiutaPercorso(int $id)
     {
         $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteEsterno');
         $p = USingleton::getInstance('FPersistentManager')->getPercorso($id);
@@ -73,8 +74,9 @@ class CInbox
     /**
      * rifiuta un account ed invia una mail di conferma all'utente
      * @param int $id id dell'account
+     * @param string $tipo
      */
-    public function rifiutaUtente($id, $tipo)
+    public function rifiutaUtente(int $id, string $tipo)
     {
         if ($tipo == 'moderatore')
             $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteInterno');
@@ -96,7 +98,7 @@ class CInbox
      *
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function inviaMail($username, $cosa, $come, $id, $email)
+    public function inviaMail(string $username, string $cosa, string $come, int $id, string $email)
     {
 
         global $config;
