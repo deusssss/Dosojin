@@ -24,7 +24,7 @@ class CVisualizzaPercorso
     {
         try {
             $percorso = USingleton::getInstance('FPersistentManager')->getPercorso($id);
-            if ($percorso==false)
+            if ($percorso == false || $tappa > count($percorso->tappe))
                 throw new Exception();
             $sessionID = USingleton::getInstance('USession')->leggi_valore('idUtente');
             if ($sessionID != false)
@@ -36,7 +36,7 @@ class CVisualizzaPercorso
                 USingleton::getInstance('VVisualizzaPercorso')->mostraSchedaPercorso($percorso, $tappa, $seguito);
             } else
                 USingleton::getInstance('CHome')->impostaPaginaHome();
-        } catch (Exception|Error) {
+        } catch (Exception | Error) {
             throw new Exception();
         }
     }

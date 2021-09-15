@@ -12,7 +12,7 @@ class USingleton
     /**
      * @var array $instances Array statico contenente le istanze di oggetti attivi, utile per creare una struttura singleton
      */
-    private static $instances = array();
+    private static array $instances = array();
 
     /**
      * Costruttore reso privato e dichiarato vuoto, in modo da restituire eccezioni se si cerca di istanziarlo direttamente.

@@ -5,7 +5,7 @@ global $config;
 $config['smarty']['template_dir'] = 'Smarty/templates';
 $config['smarty']['compile_dir'] = 'Smarty/templates_c';
 $config['smarty']['config_dir'] = 'Smarty/configs';
-$config['smarty']['cache_dir'] = 'Smarty/main/cache';
+$config['smarty']['cache_dir'] = 'Smarty/cache';
 //mysql
 $config['mysql']['user'] = 'root';
 $config['mysql']['password'] = '';
