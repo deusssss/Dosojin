@@ -67,7 +67,10 @@ class CInbox
                 $u = USingleton::getInstance('FPersistentManager')->getUtente($id, 'UtenteEsterno');
             USingleton::getInstance('FPersistentManager')->approvaUtente($id, $tipo);
             $this->getMyInbox();
-            $this->inviaMail($u->username, 'account', 'approvato', $u->id, $u->email);
+            if ($tipo == 'moderatore')
+                $this->inviaMail($u->username, 'account', 'approvato', $u->id, $u->email, true);
+            else
+                $this->inviaMail($u->username, 'account', 'approvato', $u->id, $u->email);
         } else
             throw new Exception();
     }
@@ -120,7 +123,7 @@ class CInbox
      *
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function inviaMail(string $username, string $cosa, string $come, int $id, string $email)
+    public function inviaMail(string $username, string $cosa, string $come, int $id, string $email, bool $interno = false)
     {
 
         global $config;
@@ -128,11 +131,14 @@ class CInbox
         $mail = new PHPMailer(true);
         $message = 'Ciao, ' . $username . ', ti informiamo che il tuo ' . $cosa . 'è stato ' . $come . '.';
         if ($come == 'approvato') {
-            $message = $message . 'clicca sul link per visualizzarlo. ' . $config['url'] ;
+            $message = $message . 'clicca sul link per visualizzarlo. ' . $config['url'];
             if ($cosa == 'account')
                 $message = $message . 'Utente/getPaginaUtente/' . $id;
-            else
+            else {
                 $message = $message . 'VisualizzaPercorso/impostaPaginaVisualizzazione/' . $id;
+                if ($interno)
+                    $message = $message . '/true';
+            }
         } else
             $message = $message . ' Riprova assicurandoti di rispettare le norme del regolamento';
 
