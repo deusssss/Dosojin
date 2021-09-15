@@ -24,7 +24,7 @@ class CVisualizzaPercorso
     {
         try {
             $percorso = USingleton::getInstance('FPersistentManager')->getPercorso($id);
-            if ($percorso == false || $tappa > count($percorso->tappe))
+            if ($percorso == false || $tappa >= count($percorso->tappe))
                 throw new Exception();
             $sessionID = USingleton::getInstance('USession')->leggi_valore('idUtente');
             if ($sessionID != false)
