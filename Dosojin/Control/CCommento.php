@@ -20,7 +20,7 @@ class CCommento
      */
     public function pubblicaCommento()
     {
-        if ((USingleton::getInstance('USession')->leggi_valore('idUtente') != false)) {
+        if ((USingleton::getInstance('USession')->leggi_valore('idUtente') != false) && USingleton::getInstance('Usession')->leggi_valore('tipoUtente')=='UtenteEsterno') {
             $commento = new Ecommento();
             $commento->utente = USingleton::getInstance('USession')->leggi_valore('idUtente');
             $commento->rating = $_POST['rating'];

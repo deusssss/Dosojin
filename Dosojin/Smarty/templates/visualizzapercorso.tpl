@@ -214,7 +214,7 @@
                 {/if}
             </ul>
             <br><br><br><br>
-            {if $logged==true}
+            {if $logged==true && $userType!='interno'}
             <div class="media"><img src="{$picture}" alt="" width="50" height="50"
                                     class="mr-3 rounded-circle">
                 <div class="media-body">
