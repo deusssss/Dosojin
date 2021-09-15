@@ -18,22 +18,27 @@ class CVisualizzaPercorso
      * @param int $id id del percorso
      * @param int $tappa id della tappa da mostrare
      * @param false $seguito se il percorso visualizzato è il seguito
+     * @throws Exception
      */
     public function impostaPaginaVisualizzazione(int $id, int $tappa = 0, bool $seguito = false)
     {
+        try {
+            $percorso = USingleton::getInstance('FPersistentManager')->getPercorso($id);
+            if ($percorso==false)
+                throw new Exception();
+            $sessionID = USingleton::getInstance('USession')->leggi_valore('idUtente');
+            if ($sessionID != false)
+                $user = USingleton::getInstance('FPersistentManager')->getUtente($sessionID, USingleton::getInstance('USession')->leggi_valore('tipoUtente'));
+            else
+                $user = false;
+            if (($sessionID == $percorso->creatore) || ($percorso->visibile == 1 && $percorso->approvato == 1) || (($percorso->visibile == 0 && $percorso->approvato == 0) && (get_class($user) == 'EUtenteInterno') && ($user->ruolo == 'moderatore'))) {
 
-
-        $percorso = USingleton::getInstance('FPersistentManager')->getPercorso($id);
-        $sessionID = USingleton::getInstance('USession')->leggi_valore('idUtente');
-        if ($sessionID != false)
-            $user = USingleton::getInstance('FPersistentManager')->getUtente($sessionID, USingleton::getInstance('USession')->leggi_valore('tipoUtente'));
-        else
-            $user = false;
-        if (($sessionID == $percorso->creatore) || ($percorso->visibile == 1 && $percorso->approvato == 1) || (($percorso->visibile == 0 && $percorso->approvato == 0) && (get_class($user) == 'EUtenteInterno') && ($user->ruolo == 'moderatore'))) {
-
-            USingleton::getInstance('VVisualizzaPercorso')->mostraSchedaPercorso($percorso, $tappa, $seguito);
-        } else
-            USingleton::getInstance('CHome')->impostaPaginaHome();
+                USingleton::getInstance('VVisualizzaPercorso')->mostraSchedaPercorso($percorso, $tappa, $seguito);
+            } else
+                USingleton::getInstance('CHome')->impostaPaginaHome();
+        } catch (Exception|Error) {
+            throw new Exception();
+        }
     }
 
 }
