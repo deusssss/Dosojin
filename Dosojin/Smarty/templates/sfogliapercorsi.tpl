@@ -144,7 +144,7 @@
                                         <a href="Utente/getPaginaUtente/{$percorsi[$i]['idCreatore']}">{$percorsi[$i]['creatore']}</a>
                                     </td>
                                     <td>{$percorsi[$i]['luogo']}</td>
-                                    <td>{$percorsi[$i]['lunghezza']}</td>
+                                    <td>{$percorsi[$i]['lunghezza']} Km</td>
                                     <td>{$percorsi[$i]['rating']}</td>
                                     <td>{$percorsi[$i]['tappe']}</td>
                                     <td>{$percorsi[$i]['trasporti']}</td>
