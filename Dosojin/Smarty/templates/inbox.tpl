@@ -104,8 +104,14 @@
                                     {/if}
                                     {if $ruolo=='amministratore'}
                                         <td>
-                                            <a href="Utente/getPaginaUtente/{$inbox[$i]['idUtente']}">{$inbox[$i]['username']}</a>
-                                        </td>
+                                    {if $inbox[$i]['tipo']=='moderatore'}
+                                            <a href="Utente/getPaginaUtente/{$inbox[$i]['idUtente']}/true">{$inbox[$i]['username']}</a>
+                                        {/if}
+                                        {if $inbox[$i]['tipo']=='azienda'}
+
+                                                <a href="Utente/getPaginaUtente/{$inbox[$i]['idUtente']}">{$inbox[$i]['username']}</a>
+                                        {/if}
+                                    </td>
                                         <td>
                                             <span>{$inbox[$i]['tipo']}</span>
                                         </td>
