@@ -31,7 +31,7 @@ class CFrontController
                     $method = $request[1];
                     $params = array_slice($request, 2);
                     try {
-                        $class->$method(...$params);
+                        $class->$method(...$params); //unpacking
                     }
                     catch (Error|Exception){
                         USingleton::getInstance('CError')->impostaPaginaErrore('except', 404);
@@ -49,6 +49,3 @@ class CFrontController
 
 
 }
-
-
-

@@ -11,7 +11,7 @@ class ETappa
      */
     public $ID_percorso;
     /**
-     * @var int $nome nome dlla tappa
+     * @var int $nome nome della tappa
      */
     public $nome;
     /**
@@ -19,7 +19,7 @@ class ETappa
      */
     public $indirizzo;
     /**
-     * @var int $permanenza_consigliata permanenza consigliata nella tappa
+     * @var string $permanenza_consigliata permanenza consigliata nella tappa
      */
     public string $permanenza_consigliata;
     /**

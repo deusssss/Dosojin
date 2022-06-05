@@ -83,7 +83,7 @@ class FDB
      */
     private function connect(string $host, string $username, string $password, string $db)
     {
-        $this->connection = new PDO('mysql:host=' . $host . ';dbname=' . $db, $username, $password);
+        $this->connection = new PDO('mysql:host=' . $host . ';dbname=' . $db, $username, $password); //portable data object
 
     }
 

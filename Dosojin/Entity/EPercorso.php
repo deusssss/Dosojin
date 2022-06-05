@@ -63,7 +63,7 @@ class EPercorso
             foreach ($this->commenti as $c) {
                 $tot += $c->rating;
             }
-            return $tot / count($this->commenti);
+            return number_format($tot / count($this->commenti), 2);
         } else
             return 0;
     }
